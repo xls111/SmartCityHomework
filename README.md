@@ -52,9 +52,15 @@ git clone git@github.com:xls111/SmartCityHomework.git
 vx.3...进行小的改动和修改
 ### 4. 提交修改的代码
 在你修改的代码文件右键，按下图所示，选择Add 添加到git的暂存区（缓存区）中
+
 ![img_2.png](assets/img_2.png)
+
 之后再右键，选择Commit File 提交上一步添加到暂存区的代码文件，
 ![img_3.png](assets/img_3.png)
+
 Git 每次提交一次文件，都要写相应的提交信息（comment），在左下框简单而清晰地写出此处提交的内容后，
 点击Commit and Push按钮将修改后的代码提交到Github上。
+
 ![img_4.png](assets/img_4.png)
+
+刷新Github页面，可以看到代码已经被修改了
