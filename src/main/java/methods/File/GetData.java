@@ -1,13 +1,14 @@
 package methods.File;
 
+import domain.GridFileHead;
+
 import java.io.DataInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.*;
 
-public class connMySQL {
-    public static void main(String[] args) throws SQLException, FileNotFoundException {
+public class GetData {
+    public static void main(String[] args) throws SQLException {
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
             System.out.println("数据库引擎加载成功");
@@ -20,30 +21,8 @@ public class connMySQL {
         System.out.println("连接至智慧城市数据库");
         Statement stat = conn.createStatement();
         System.out.println("statement对象建立成功");
-//        stat.executeUpdate("drop database if exists grid");
-//        stat.executeUpdate("create database grid");
-//        System.out.println("grid创建成功");
-//        stat.close();
-//        conn.close();
-//        conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/grid","root","lz218218");
-//        System.out.println("Connected to database grid!");
-//        stat = conn.createStatement();
-//        System.out.println("Connected to object statement!");
-//        stat.executeUpdate("drop table if exists GaugeProperty");
-//        stat.executeUpdate("create table GaugeProperty(id int(3),name varchar(10),sid char(4), x double, y double, enname varchar(10))");
-//        System.out.println("Created GaugeProperty!");
-//        stat.close();
-//        conn.close();
 
-
-        String sql = "insert into dem_file(id,filename,data) values(?,?,?)";
-//        pstmt = conn.prepareStatement(sql);
-//        pstmt.setString(1,"1");
-//        pstmt.setString(2,"dem.asc");
-//        InputStream in = new FileInputStream("D:\\文件\\课件\\智慧城市建设原理与方法\\work\\data\\dem.asc");
-//        pstmt.setBinaryStream(3,in);
-//        pstmt.executeUpdate();
-        sql = "select filename,data from dem_file where id =?";
+        String sql = "select filename,data from dem_file where id =?";
         pstmt = conn.prepareStatement(sql);
         pstmt.setInt(1,1);
 
@@ -52,7 +31,7 @@ public class connMySQL {
         String filename = rs.getString("filename");
         InputStream input = rs.getBinaryStream("data");
 
-        Direction2.GridFileHead grid=new Direction2.GridFileHead();
+        GridFileHead grid=new GridFileHead();
         try{
             DataInputStream in=new DataInputStream(input);
             int fileSize=512;
