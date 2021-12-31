@@ -1,23 +1,28 @@
-package methods.File;
+package methods.Database;
 
 import domain.GridFileHead;
 
-import java.io.DataInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.sql.*;
+import java.util.Properties;
 
 public class GetData {
-    public static void main(String[] args) throws SQLException {
+    public static void main(String[] args) throws SQLException, IOException {
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
             System.out.println("数据库引擎加载成功");
         }catch(ClassNotFoundException e){
             e.printStackTrace();
         }
+
+        Properties props = new Properties();
+        FileInputStream fis;
+        fis = new FileInputStream("src/main/resources/db.properties");
+        props.load(fis);
+
         PreparedStatement pstmt;
         ResultSet rs;
-        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/smart_city","root","lz218218");
+        Connection conn = DriverManager.getConnection(props.getProperty("db_url","jdbc:mysql://localhost:3306/smart_city"),props.getProperty("db_username","root"),props.getProperty("db_password","root"));
         System.out.println("连接至智慧城市数据库");
         Statement stat = conn.createStatement();
         System.out.println("statement对象建立成功");
@@ -62,7 +67,7 @@ public class GetData {
             ex.printStackTrace();
         }
 
-        double[][] ter=null;
+        double[][] ter;
         try{
             DataInputStream in=new DataInputStream(input);
             int fileSize=in.available();
