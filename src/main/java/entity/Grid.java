@@ -1,9 +1,4 @@
-package domain;
-
-import java.io.IOException;
-
-import static methods.File.Dem.ReadGridFileHead;
-import static methods.File.Dem.readGridFileToDoubleArray2D;
+package entity;
 
 /**
  * 网格
@@ -14,8 +9,8 @@ import static methods.File.Dem.readGridFileToDoubleArray2D;
 public class Grid {
     private int rows;                    //行数
     private int cols;                    //列数
-    private double bx;                   //左下角横坐标
-    private double by;                   //左下角纵坐标
+    private double xllcorner;                   //左下角横坐标
+    private double yllcorner;                   //左下角纵坐标
     private double cellsize;             //网格大小
     private int NODATA_value;            //无数据时的保留值
     private double[][] map;              //流量网格
@@ -24,8 +19,8 @@ public class Grid {
      * domain.Grid 无参构造函数，初始化网格设置
      */
     public Grid() {
-        this.bx = 0;
-        this.by = 0;
+        this.xllcorner = 0;
+        this.yllcorner = 0;
         this.rows = 10;
         this.cols = 10;
         this.cellsize = 100;
@@ -47,8 +42,8 @@ public class Grid {
     public Grid(int rows, int cols, double bx, double by, double cellsize, int NODATA_value, double[][] map) {
         this.rows = rows;
         this.cols = cols;
-        this.bx = bx;
-        this.by = by;
+        this.xllcorner = bx;
+        this.yllcorner = by;
         this.cellsize = cellsize;
         this.NODATA_value = NODATA_value;
         this.map = map;
@@ -63,15 +58,15 @@ public class Grid {
      */
     public double[] getPosition(int x, int y) {
         double[] positions = new double[2];
-        positions[0] = (0.5 + x) * this.cellsize + this.bx;
-        positions[1] = (0.5 + y) * this.cellsize + this.by;
+        positions[0] = (0.5 + x) * this.cellsize + this.xllcorner;
+        positions[1] = (0.5 + y) * this.cellsize + this.yllcorner;
         return positions;
     }
 
     public int[] parsePosition(double px, double py) {
         int[] index = new int[2];
-        index[0] = (int) Math.floor((px - this.bx) / this.cellsize);
-        index[1] = (int) Math.floor((py - this.by) / this.cellsize);
+        index[0] = (int) Math.floor((px - this.xllcorner) / this.cellsize);
+        index[1] = (int) Math.floor((py - this.yllcorner) / this.cellsize);
         return index;
     }
 
@@ -91,20 +86,20 @@ public class Grid {
         this.cols = cols;
     }
 
-    public double getBx() {
-        return bx;
+    public double getXllcorner() {
+        return xllcorner;
     }
 
-    public void setBx(double bx) {
-        this.bx = bx;
+    public void setXllcorner(double xllcorner) {
+        this.xllcorner = xllcorner;
     }
 
-    public double getBy() {
-        return by;
+    public double getYllcorner() {
+        return yllcorner;
     }
 
-    public void setBy(double by) {
-        this.by = by;
+    public void setYllcorner(double yllcorner) {
+        this.yllcorner = yllcorner;
     }
 
     public double getCellsize() {

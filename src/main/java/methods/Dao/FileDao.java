@@ -1,18 +1,17 @@
-package methods.File;
+package methods.Dao;
 
-import domain.Grid;
-import domain.GridFileHead;
+import entity.GridFileHead;
 
 import java.io.*;
 
-public class Dem {
+public class FileDao {
     /**
      * 读取asc文件的数字数据
      *
      * @param filePath 文件路径
      * @return {@link double[][] 网格数据}
      */
-    public static double[][] readGridFileToDoubleArray2D(String filePath) {
+    public double[][] readGridFileToDoubleArray2D(String filePath) {
 
         double[][] resultData = null;
 
@@ -48,7 +47,6 @@ public class Dem {
                 for (int j = 0; j < ncols; j++) {
                     resultData[i][j] = Double.parseDouble(tempData[j]);
                 }
-
             }
             in.close();
 
@@ -149,24 +147,5 @@ public class Dem {
             e.printStackTrace();
         }
 
-    }
-
-    public static Grid getGridFromFile(String path) {
-        Grid grid = new Grid();
-        double[][] map = readGridFileToDoubleArray2D(path);
-        GridFileHead head = null;
-        try {
-            head = ReadGridFileHead(path);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        grid.setMap(map);
-        grid.setBx(head.xllcorner);
-        grid.setBy(head.yllcorner);
-        grid.setCellsize(head.cellsize);
-        grid.setRows(head.nrows);
-        grid.setCols(head.ncols);
-        grid.setNODATA_value(head.NODATA_value);
-        return grid;
     }
 }

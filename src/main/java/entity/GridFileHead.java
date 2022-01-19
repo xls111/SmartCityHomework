@@ -1,4 +1,4 @@
-package domain;
+package entity;
 
 public class GridFileHead {
     public int ncols;
@@ -12,4 +12,7 @@ public class GridFileHead {
     public double cellsize;
 
     public int NODATA_value;
+
+
+
 }
