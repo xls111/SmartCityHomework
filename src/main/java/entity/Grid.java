@@ -6,6 +6,7 @@ package entity;
  * @author PC
  * @date 2021/12/29
  */
+//测试
 public class Grid {
     private int rows;                    //行数
     private int cols;                    //列数
