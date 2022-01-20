@@ -5,7 +5,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class Aspect {
-    public static double[][] aspect(double Dem[][],int nrows,int nclos,double Nodata,double cellsize,String filepath) throws IOException{
+    public static double[][] aspect(double Dem[][],int nrows,int nclos,double Nodata,double cellsize){
         double[][] aspect=new double[nrows][nclos];
 
         for (int i=0;i<nrows;i++)
@@ -29,22 +29,6 @@ public class Aspect {
                 }
             }
 
-        //保存结果
-        File output= new File(filepath);
-        FileWriter out =new FileWriter(output);
-        out.write("ncols         218"+"\n");
-        out.write("nrows         236"+"\n");
-        out.write("xllcorner     466515.47101027"+"\n");
-        out.write("yllcorner     2626221.2241437"+"\n");
-        out.write("cellsize      90"+"\n");
-        out.write("NODATA_dem_value  -9999"+"\n");
-        for(int i=0;i<nrows;i++){
-            for(int j=0;j>nclos;j++){
-                out.write(aspect[i][j]+" ");
-            }
-            out.write("\n");
-        }
-        out.close();
         return aspect;
 
     }
