@@ -1,9 +1,9 @@
 import entity.Dem;
 import entity.GridFileHead;
-import methods.Dao.FileDao;
-import methods.Database.ReadDataFromDB;
-import methods.Database.StoreDataToDB;
-import methods.Dao.DemDao;
+import Dao.FileDao;
+import Database.ReadDataFromDB;
+import Database.StoreDataToDB;
+import Dao.DemDao;
 
 import java.io.IOException;
 import java.util.List;

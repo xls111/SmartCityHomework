@@ -1,4 +1,4 @@
-package methods.Database;
+package Database;
 
 import entity.Dem;
 import entity.GridFileHead;

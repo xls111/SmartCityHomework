@@ -1,4 +1,4 @@
-package methods.Dao;
+package Dao;
 
 import entity.GridFileHead;
 

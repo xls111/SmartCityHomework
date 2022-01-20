@@ -1,15 +1,12 @@
-package methods.Dao;
+package Dao;
 
 import entity.Dem;
-import entity.GridFileHead;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import methods.Dao.FileDao;
-
-import static methods.Dao.FileDao.ReadGridFileHead;
+import static Dao.FileDao.ReadGridFileHead;
 
 //TODO:将数据与数据操作分离
 public class DemDao {

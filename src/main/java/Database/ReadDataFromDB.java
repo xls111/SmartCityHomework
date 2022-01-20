@@ -1,4 +1,4 @@
-package methods.Database;
+package Database;
 
 import entity.GridFileHead;
 
@@ -74,8 +74,14 @@ public class ReadDataFromDB {
                 List<Object> tempList = new ArrayList<>();
                 int id = resultSet.getInt("id");
                 double flow = resultSet.getDouble("flow");
+                int huanglongdai = resultSet.getInt("huanglongdai");
+                int lianxing = resultSet.getInt("lianxing");
+                int fengmulang = resultSet.getInt("fengmulang");
                 tempList.add(id);
                 tempList.add(flow);
+                tempList.add(huanglongdai);
+                tempList.add(lianxing);
+                tempList.add(fengmulang);
                 rain.add(tempList);
                 System.out.println("id:" + id + "flow:" + flow);
             }
