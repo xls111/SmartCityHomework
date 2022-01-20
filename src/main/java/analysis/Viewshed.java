@@ -25,6 +25,7 @@ public class Viewshed {
             }
         }
 
+        //以每个像元中心作为起点
         Point startPoint=new Point(pointCoordinateX+0.5,pointCoordinateY+0.5);
 
         if(Dem[(int) pointCoordinateX][(int) pointCoordinateY]==Nodata)
@@ -42,9 +43,10 @@ public class Viewshed {
                         ArrayList<Point> temList = new ArrayList<Point>();
                         ArrayList<Point> gridList = new ArrayList<Point>();
 //                        HashSet<Point> hs=new HashSet<Point>();
+                        // 以目标像元中心作为终点
                         Point endPoint = new Point(i+0.5, j+0.5);
 
-                       double dx = endPoint.X - startPoint.X;
+                        double dx = endPoint.X - startPoint.X;
                         double dy = endPoint.Y- startPoint.Y;
 
                         // 设置增量
@@ -57,6 +59,8 @@ public class Viewshed {
                         for (int m = 0; m <= Math.abs(dx)-1; m++) {
                             // 沿横轴方向遍历，既查询与网格轴轴的交点
                             Point temPoint1 = new Point();
+                            
+                            //根据dx正负确定向上或向下取整
                             if(dx>0)
                                 temPoint1.X = Math.ceil(startPoint.X) + increX * m;
                             else if (dx<0)
@@ -69,6 +73,8 @@ public class Viewshed {
                         // 沿纵轴方向遍历，既查询与网格横轴的交点
                         for (var n = 0; n <= Math.abs(dy)-1; n++) {
                             Point temPoint2 = new Point();
+                            
+                            //根据dy正负确定向上或向下取整
                             if (dy>0)
                                 temPoint2.Y = Math.ceil(startPoint.Y) + increY * n;
                             else if(dy<0)
@@ -78,8 +84,6 @@ public class Viewshed {
                             temPoint2.X = (temPoint2.Y - startPoint.Y) / k + startPoint.X;
                             temList.add(temPoint2);
 
-//                        int max=Dem[i][j];
-//                        for int(m=i,m)
                         }
 
                         for (int kk=0; kk<(temList.size());kk++) {
@@ -108,6 +112,7 @@ public class Viewshed {
                                 gridList.add(temGridLeft);
                                 gridList.add(temGridRight);
                             }
+                            // 斜率为+-1交点
                             else if((temList.get(kk).Y ==Math.ceil(temList.get(kk).Y)) &&
                                     (temList.get(kk).X ==Math.ceil(temList.get(kk).X))) {
                                 temGridCenter.X = Math.ceil(temList.get(kk).X+0.5*increX);
@@ -116,8 +121,9 @@ public class Viewshed {
                             }
                         }
 
-
-                        double max=-9999;
+//                         hs.addAll(gridList);
+//                         gridList.clear();
+//                         gridList.addAll(hs);
                         double max=Dem[i][j];
                         for(int kk=0;kk<gridList.size();kk++){
                             if((gridList.get(kk).X-1==x1&& gridList.get(kk).Y-1==y1)||(gridList.get(kk).X-1==i&& gridList.get(kk).Y-1==j))
