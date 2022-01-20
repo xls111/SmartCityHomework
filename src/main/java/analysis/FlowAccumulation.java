@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class Accumulation_get {
+public class FlowAccumulation {
     //计算河流源头点
     public static int[][] Origin(int[][] dir) throws IOException {
         int nrows=236;

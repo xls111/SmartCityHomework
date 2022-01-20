@@ -1,14 +1,12 @@
 package analysis;
 
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 
 public class UpStreamUnitsCount {
-    public static class Up_value {
+    public static class upValue {
         int one_value[];
 
-        Up_value(){
+        upValue(){
             one_value = new int [8];
             for(int i=0;i<8;i++){
                 one_value[i]=0;
@@ -17,7 +15,7 @@ public class UpStreamUnitsCount {
     }
 
     //计算上游单元
-    public static int[][] up_value_get(int[][] dir) throws IOException {
+    public static int[][] getUpValue(int[][] dir) throws IOException {
 
         int nrows=236;
         int ncols=218;
@@ -28,10 +26,10 @@ public class UpStreamUnitsCount {
                 number[i][j] = 0;
             }
         }
-        Up_value up_value[][]=new Up_value[nrows][ncols];
+        upValue up_value[][]=new upValue[nrows][ncols];
         for (int i = 0; i < nrows; i++) {
             for (int j = 0; j < ncols; j++) {
-                up_value[i][j] = new Up_value();
+                up_value[i][j] = new upValue();
             }
         }
 

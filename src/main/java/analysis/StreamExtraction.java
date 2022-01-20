@@ -4,8 +4,8 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class River_get {
-    public static int[][] river_get(int[][] acc,int thresold) throws IOException {
+public class StreamExtraction {
+    public static int[][] getRiver(int[][] acc, int thresold) throws IOException {
         int nrows=236;
         int ncols=218;
         int river[][] = new int[nrows][ncols];
