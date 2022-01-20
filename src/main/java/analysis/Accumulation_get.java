@@ -1,0 +1,180 @@
+package analysis;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+
+public class Accumulation_get {
+    //计算河流源头点
+    public static int[][] Origin(int[][] dir) throws IOException {
+        int[][] result =new int[236][218];
+        int i;int j;
+        for(i=0;i<236;i++){
+            for(j=0;j<218;j++){
+                int count=0;
+                if(dir[i][j]!=-9999){
+                    //搜寻像元周围八方向
+                    if(i+1<236&&j-1>=0){
+                        if(dir[i+1][j-1]==8){
+                            count++;
+                        }
+                    }
+                    if(j-1>=0){
+                        if(dir[i][j-1]==4){
+                            count++;
+                        }
+                    }
+                    if(j-1>=0&&i-1>=0){
+                        if(dir[i-1][j-1]==2){
+                            count++;
+                        }
+                    }
+                    if(i-1>=0){
+                        if(dir[i-1][j]==1){
+                            count++;
+                        }
+                    }
+                    if(i-1>=0&&j+1<218){
+                        if(dir[i-1][j+1]==128){
+                            count++;
+                        }
+                    }
+                    if(j+1<218){
+                        if(dir[i][j+1]==64){
+                            count++;
+                        }
+                    }
+                    if(j+1<218&&i+1<236){
+                        if(dir[i+1][j+1]==32){
+                            count++;
+                        }
+                    }
+                    if(i+1<236){
+                        if(dir[i+1][j]==16){
+                            count++;
+                        }
+                    }
+                }
+                if(dir[i][j]==-9999){
+                    result[i][j]=-9999;
+                }
+                else if(dir[i][j]==0){
+                    result[i][j]=0;//最终流入点不算为流出值
+                }
+                else if(count>0){
+                    result[i][j]=0;
+                }else{
+                    result[i][j]=1;//周围八方向无流入，因此为源头点
+                }
+            }
+        }
+        return result;
+    }
+
+    //回溯法求解累计流量
+    public static int Add(int[][] dir,int[][] Origin,int[][] acc,int i,int j){
+        //回溯到源头点时，停止递归
+        if(Origin[i][j]==1){
+            acc[i][j]=0;
+            return 0;
+        }
+        //不为源头点时，朝八个方向寻找上游单元
+        if(j-1>=0){
+            if(dir[i][j-1]==4){
+                acc[i][j]+=Add(dir,Origin,acc,i,j-1);
+                acc[i][j]++;
+            }
+        }
+        if(j-1>=0&&i-1>=0){
+            if(dir[i-1][j-1]==2){
+                acc[i][j]+=Add(dir,Origin,acc,i-1,j-1);
+                acc[i][j]++;
+            }
+        }
+        if(i-1>=0){
+            if(dir[i-1][j]==1){
+                acc[i][j]+=Add(dir,Origin,acc,i-1,j);
+                acc[i][j]++;
+            }
+        }
+        if(j+1<218&&i-1>=0){
+            if(dir[i-1][j+1]==128){
+                acc[i][j]+=Add(dir,Origin,acc,i-1,j+1);
+                acc[i][j]++;
+            }
+        }
+        if(j+1<218){
+            if(dir[i][j+1]==64){
+                acc[i][j]+=Add(dir,Origin,acc,i,j+1);
+                acc[i][j]++;
+            }
+        }
+        if(j+1<218&&i+1<236){
+            if(dir[i+1][j+1]==32){
+                acc[i][j]+=Add(dir,Origin,acc,i+1,j+1);
+                acc[i][j]++;
+            }
+        }
+        if(i+1<236){
+            if(dir[i+1][j]==16){
+                acc[i][j]+=Add(dir,Origin,acc,i+1,j);
+                acc[i][j]++;
+            }
+        }
+        if(i+1<236&&j-1>=0){
+            if(dir[i+1][j-1]==8){
+                acc[i][j]+=Add(dir,Origin,acc,i+1,j-1);
+                acc[i][j]++;
+            }
+        }
+        return acc[i][j];
+    }
+
+    //计算累计流
+    public static int[][] accum_get(int[][] dir,String filepath) throws IOException {
+        int i, j;
+        int[][] acc=new int[236][218];
+        for(i=0;i<236;i++){
+            for(j=0;j<218;j++){
+                acc[i][j]=0;
+            }
+        }
+        int[][] Origin=new int[236][218];
+        for(i=0;i<236;i++){
+            for(j=0;j<218;j++){
+                Origin[i][j]=0;
+            }
+        }
+        Origin=Origin(dir);
+        //便利整个格网，对非no_data单元进行回溯法递归求解
+        for (i = 0; i < 236; i++) {
+            for (j = 0; j < 218; j++) {
+                if(dir[i][j]==-9999){
+                    acc[i][j]=-9999;
+                }
+                else {
+                    if (dir[i][j] == 0) {
+                        Add(dir, Origin, acc, i, j);
+                    }
+                }
+            }
+        }
+        //保存结果
+        File output= new File(filepath);
+        FileWriter out =new FileWriter(output);
+        out.write("ncols         218"+"\n");
+        out.write("nrows         236"+"\n");
+        out.write("xllcorner     466515.47101027"+"\n");
+        out.write("yllcorner     2626221.2241437"+"\n");
+        out.write("cellsize      90"+"\n");
+        out.write("NODATA_value  -9999"+"\n");
+        for(i=0;i<236;i++){
+            for(j=0;j<218;j++){
+                out.write(acc[i][j]+" ");
+            }
+            out.write("\n");
+        }
+        out.close();
+        return acc;
+    }
+}
