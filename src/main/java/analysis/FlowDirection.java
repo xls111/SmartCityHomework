@@ -1,11 +1,9 @@
 package analysis;
 
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 
 public class FlowDirection {
-    public static double[][] flowdirection(double Dem[][],int nrows,int nclos,double Nodata,String filepath) throws IOException{
+    public static double[][] flowdirection(double Dem[][],int nrows,int nclos,double Nodata) throws IOException{
 
         double[][] Dir=new double[nrows][nclos];
 
