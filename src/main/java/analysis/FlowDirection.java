@@ -5,219 +5,68 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Arrays;
 
-public class FlowDirection {
+public class Dir_get {
     //计算流向
     public static int[][] direction(int dem_value[][]) throws IOException {
-        int[][] dir = new int[236][218];
-        //先将流向均赋予为null值
-        for (int i = 0; i < 236; i++) {
-            for (int j = 0; j < 218; j++) {
-                dir[i][j] = -9999;
-            }
-        }
-        //遍历每个栅格，计算流量
-        for (int i = 0; i < 236; i++) {
-            for (int j = 0; j < 218; j++) {
-                //非no_data值时，才进入判断
-                if (dem_value[i][j] > -9999) {
-                    //边界点情况①
-                    if (i + 1 >= 236 && j - 1 < 0) {
-                        double[] temp = new double[]{dem_value[i - 1][j], dem_value[i][j + 1], dem_value[i - 1][j + 1]};
-                        for (int k = 0; k < 3; k++) {
-                            if (temp[k] < 0) {
-                                temp[k] = 9999.0;
-                            }
+        //定义流向列表，该列表按照一个以目标位置为中心的3*3矩阵，从左上角开始按顺序定义流向
+        int Dir[][] = new int[236][218];
+        int nrows = 236;
+        int nclos = 218;
+        int[] list = {32, 64, 128, 16, 0, 1, 8, 4, 2};
+        for (int i = 0; i < nrows; i++) {
+            for (int j = 0; j < nclos; j++) {
+
+                //mm为以目标位置为中心的3*3矩阵的检索，方便其和高程差矩阵进行对应
+                int mm = 0;
+
+                //定义向各个方向的高程差
+                double[] gap = new double[9];
+
+                //计算距离
+                for (int m = i - 1; m < i + 2; m++) {
+                    for (int n = j - 1; n < j + 2; n++) {
+                        //如果索引范围超出边界，高程差定义为0
+                        if (m < 0 || n < 0 || m >= nrows || n >= nclos) {
+                            gap[mm] = 0;
+                            mm++;
                         }
-                        double minNum = Arrays.stream(temp).min().getAsDouble();
-                        if(minNum>=dem_value[i][j]){
-                            dir[i][j]=0;
-                        } else if (minNum == dem_value[i - 1][j]) {
-                            dir[i][j] = 16;
-                        } else if (minNum == dem_value[i][j + 1]) {
-                            dir[i][j] = 4;
-                        } else {
-                            dir[i - 1][j + 1] = 8;
+                        //如果检索到中心位置，高程差定义为0
+                        else if (m == i && n == j) {
+                            gap[mm] = 0;
+                            mm++;
                         }
-                        //边界点情况②
-                    } else if (i + 1 >= 236 && j + 1 >= 218) {
-                        double[] temp = new double[]{dem_value[i - 1][j - 1], dem_value[i][j - 1], dem_value[i - 1][j]};
-                        for (int k = 0; k < 3; k++) {
-                            if (temp[k] < 0) {
-                                temp[k] = 9999.0;
-                            }
-                        }
-                        double minNum = Arrays.stream(temp).min().getAsDouble();
-                        if(minNum>=dem_value[i][j]){
-                            dir[i][j]=0;
-                        } else if (minNum == dem_value[i - 1][j - 1]) {
-                            dir[i][j] = 32;
-                        } else if (minNum == dem_value[i][j - 1]) {
-                            dir[i][j] = 64;
-                        } else {
-                            dir[i - 1][j + 1] = 16;
-                        }
-                        //边界点情况③
-                    } else if (i - 1 < 0 && j + 1 >= 218) {
-                        double[] temp = new double[]{dem_value[i][j - 1], dem_value[i + 1][j - 1], dem_value[i + 1][j]};
-                        for (int k = 0; k < 3; k++) {
-                            if (temp[k] < 0) {
-                                temp[k] = 9999.0;
-                            }
-                        }
-                        double minNum = Arrays.stream(temp).min().getAsDouble();
-                        if(minNum>=dem_value[i][j]){
-                            dir[i][j]=0;
-                        } else if (minNum == dem_value[i][j - 1]) {
-                            dir[i][j] = 64;
-                        } else if (minNum == dem_value[i + 1][j - 1]) {
-                            dir[i][j] = 128;
-                        } else {
-                            dir[i + 1][j] = 1;
-                        }
-                        //边界点情况④
-                    } else if (i - 1 < 0 && j - 1 < 0) {
-                        double[] temp = new double[]{dem_value[i + 1][j], dem_value[i + 1][j + 1], dem_value[i][j + 1]};
-                        for (int k = 0; k < 3; k++) {
-                            if (temp[k] < 0) {
-                                temp[k] = 9999.0;
-                            }
-                        }
-                        double minNum = Arrays.stream(temp).min().getAsDouble();
-                        if(minNum>=dem_value[i][j]){
-                            dir[i][j]=0;
-                        } else if (minNum == dem_value[i + 1][j]) {
-                            dir[i][j] = 1;
-                        } else if (minNum == dem_value[i + 1][j + 1]) {
-                            dir[i][j] = 2;
-                        } else {
-                            dir[i][j + 1] = 4;
-                        }
-                        //边界点情况⑤
-                    } else if (i + 1 >= 236) {
-                        double[] temp = new double[]{dem_value[i - 1][j - 1], dem_value[i][j + 1], dem_value[i][j - 1],
-                                dem_value[i - 1][j], dem_value[i - 1][j + 1]};
-                        for (int k = 0; k < 5; k++) {
-                            if (temp[k] < 0) {
-                                temp[k] = 9999.0;
-                            }
-                        }
-                        double minNum = Arrays.stream(temp).min().getAsDouble();
-                        if(minNum>=dem_value[i][j]){
-                            dir[i][j]=0;
-                        } else if (minNum == dem_value[i - 1][j - 1]) {
-                            dir[i][j] = 32;
-                        } else if (minNum == dem_value[i][j + 1]) {
-                            dir[i][j] = 4;
-                        } else if (minNum == dem_value[i][j - 1]) {
-                            dir[i][j] = 64;
-                        } else if (minNum == dem_value[i - 1][j]) {
-                            dir[i][j] = 16;
-                        } else {
-                            dir[i][j] = 8;
-                        }
-                        //边界点情况⑥
-                    } else if (j + 1 >= 218) {
-                        double[] temp = new double[]{dem_value[i - 1][j - 1], dem_value[i - 1][j], dem_value[i][j - 1],
-                                dem_value[i + 1][j - 1], dem_value[i + 1][j]};
-                        for (int k = 0; k < 5; k++) {
-                            if (temp[k] < 0) {
-                                temp[k] = 9999.0;
-                            }
-                        }
-                        double minNum = Arrays.stream(temp).min().getAsDouble();
-                        if(minNum>=dem_value[i][j]){
-                            dir[i][j]=0;
-                        } else if (minNum == dem_value[i - 1][j - 1]) {
-                            dir[i][j] = 32;
-                        } else if (minNum == dem_value[i - 1][j]) {
-                            dir[i][j] = 16;
-                        } else if (minNum == dem_value[i][j - 1]) {
-                            dir[i][j] = 64;
-                        } else if (minNum == dem_value[i + 1][j - 1]) {
-                            dir[i][j] = 128;
-                        } else {
-                            dir[i][j] = 1;
-                        }
-                        //边界点情况⑦
-                    } else if (j - 1 < 0) {
-                        double[] temp = new double[]{dem_value[i - 1][j], dem_value[i - 1][j + 1], dem_value[i][j + 1],
-                                dem_value[i + 1][j + 1], dem_value[i + 1][j]};
-                        for (int k = 0; k < 5; k++) {
-                            if (temp[k] < 0) {
-                                temp[k] = 9999.0;
-                            }
-                        }
-                        double minNum = Arrays.stream(temp).min().getAsDouble();
-                        if(minNum>=dem_value[i][j]){
-                            dir[i][j]=0;
-                        } else if (minNum == dem_value[i - 1][j]) {
-                            dir[i][j] = 16;
-                        } else if (minNum == dem_value[i - 1][j + 1]) {
-                            dir[i][j] = 8;
-                        } else if (minNum == dem_value[i][j + 1]) {
-                            dir[i][j] = 4;
-                        } else if (minNum == dem_value[i + 1][j + 1]) {
-                            dir[i][j] = 2;
-                        } else {
-                            dir[i][j] = 1;
-                        }
-                        //边界点情况⑧
-                    } else if (i - 1 < 0) {
-                        double[] temp = new double[]{dem_value[i][j - 1], dem_value[i + 1][j - 1], dem_value[i + 1][j],
-                                dem_value[i + 1][j + 1], dem_value[i][j + 1]};
-                        for (int k = 0; k < 5; k++) {
-                            if (temp[k] < 0) {
-                                temp[k] = 9999.0;
-                            }
-                        }
-                        double minNum = Arrays.stream(temp).min().getAsDouble();
-                        if(minNum>=dem_value[i][j]){
-                            dir[i][j]=0;
-                        } else if (minNum == dem_value[i][j - 1]) {
-                            dir[i][j] = 64;
-                        } else if (minNum == dem_value[i + 1][j - 1]) {
-                            dir[i][j] = 128;
-                        } else if (minNum == dem_value[i + 1][j]) {
-                            dir[i][j] = 1;
-                        } else if (minNum == dem_value[i + 1][j + 1]) {
-                            dir[i][j] = 2;
-                        } else {
-                            dir[i][j] = 4;
-                        }
-                        //非边界点情况
-                    } else {
-                        double[] temp = new double[]{dem_value[i][j - 1], dem_value[i + 1][j - 1], dem_value[i + 1][j],
-                                dem_value[i + 1][j + 1], dem_value[i][j + 1], dem_value[i - 1][j + 1], dem_value[i - 1][j], dem_value[i - 1][j - 1]};
-                        for (int k = 0; k < 8; k++) {
-                            if (temp[k] < 0) {
-                                temp[k] = 9999.0;
-                            }
-                        }
-                        double minNum = Arrays.stream(temp).min().getAsDouble();
-                        if(minNum>=dem_value[i][j]){
-                            dir[i][j]=0;
-                        } else if (minNum == dem_value[i + 1][j]) {
-                            dir[i][j] = 1;
-                        } else if (minNum == dem_value[i + 1][j + 1]) {
-                            dir[i][j] = 2;
-                        } else if (minNum == dem_value[i][j + 1]) {
-                            dir[i][j] = 4;
-                        } else if (minNum == dem_value[i - 1][j + 1]) {
-                            dir[i][j] = 8;
-                        } else if (minNum == dem_value[i - 1][j]) {
-                            dir[i][j] = 16;
-                        } else if (minNum == dem_value[i - 1][j - 1]) {
-                            dir[i][j] = 32;
-                        } else if (minNum == dem_value[i][j - 1]) {
-                            dir[i][j] = 64;
-                        } else if (minNum == dem_value[i + 1][j - 1]) {
-                            dir[i][j] = 128;
+                        //正常情况下返回两个位置之间高程差
+                        else {
+                            gap[mm] = dem_value[i][j] - dem_value[m][n];
+                            mm++;
                         }
                     }
                 }
+
+                //通过索引找出中心位置向各个方向DEM差距最大的方向，该方向即为流向
+                int index = 0;
+                double maxgap = gap[0];
+                for (int m = 0; m < gap.length; m++) {
+                    if (gap[m] > maxgap) {
+                        index = m;
+                        maxgap = gap[m];
+                    }
+                }
+                //如果最大高程差大于0，符合认知，将该方向流向赋予该点
+                if (maxgap > 0)
+                    Dir[i][j] = list[index];
+                    //如果最大高程差小于等于0，则赋予该点流向为0，表示不向其他方向流动
+                else
+                    Dir[i][j] = 0;
             }
         }
-
-        return dir;
+        for(int i=0;i<nrows;i++){
+            for(int j=0;j<nclos;j++){
+                if(dem_value[i][j]==-9999){
+                    Dir[i][j]=-9999;
+                }
+            }
+        }
+        return Dir;
     }
 }
