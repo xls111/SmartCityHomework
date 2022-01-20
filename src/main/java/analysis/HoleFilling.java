@@ -4,7 +4,7 @@ import java.io.IOException;
 
 
 public class HoleFilling {
-    public static double[][] hole_filling(double Dem[][],int nrows,int nclos,double Nodata) throws IOException{
+    public static double[][] hole_filling(double Dem[][],int nrows,int nclos,double Nodata) {
 
         double[][] result=new double[nrows][nclos];
         for (int i=0;i<nrows;i++)
