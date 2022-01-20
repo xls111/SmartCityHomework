@@ -14,5 +14,4 @@ public class GridFileHead {
     public int NODATA_value;
 
 
-
 }

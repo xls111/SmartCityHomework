@@ -1,9 +1,13 @@
+import Dao.RainDao;
+import Dao.StationDao;
 import entity.Dem;
 import entity.GridFileHead;
 import Dao.FileDao;
 import Database.ReadDataFromDB;
 import Database.StoreDataToDB;
 import Dao.DemDao;
+import entity.Rain;
+import entity.Station;
 
 import java.io.IOException;
 import java.util.List;
@@ -19,16 +23,20 @@ public class Main {
         demDao.readDemToList(dem);
         //dem.showDem();
 
-        demDao.readRainToList(dem);
+        Rain rain = new Rain();
+        RainDao rainDao = new RainDao();
+        rainDao.readRainToList(rain);
         //dem.showRain();
 
-        demDao.readStationToList(dem);
+        Station station = new Station();
+        StationDao stationDao = new StationDao();
+        stationDao.readStationToList(station);
         //dem.showStation();
 
         StoreDataToDB store = new StoreDataToDB();
         store.storeDemToDB(dem);
-        store.storeRainToDB(dem);
-        store.storeStationToDB(dem);
+        store.storeRainToDB(rain);
+        store.storeStationToDB(station);
 
         ReadDataFromDB readData = new ReadDataFromDB();
         GridFileHead head = FileDao.ReadGridFileHead(path);

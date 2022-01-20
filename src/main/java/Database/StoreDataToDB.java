@@ -2,6 +2,8 @@ package Database;
 
 import entity.Dem;
 import entity.GridFileHead;
+import entity.Rain;
+import entity.Station;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -72,7 +74,7 @@ public class StoreDataToDB {
 
     }
 
-    public void storeRainToDB(Dem dem){
+    public void storeRainToDB(Rain rain){
         try {
             if (validateTableNameExist("rain1")){
                 return;
@@ -91,7 +93,7 @@ public class StoreDataToDB {
 
             String sql2="insert into rain1(id,flow,huanglongdai,lianxing,fengmulang) values(?,?,?,?,?)";
             connectDB conn2 = new connectDB(sql2);
-            List<List<?>> rainList = dem.getRain();
+            List<List<?>> rainList = rain.getRain();
             for(int i=0;i< rainList.size();i++){
                 conn2.statement.setInt(1,i+1);
                 conn2.statement.setDouble(2, (double) rainList.get(i).get(1));
@@ -107,7 +109,7 @@ public class StoreDataToDB {
 
     }
 
-    public void storeStationToDB(Dem dem){
+    public void storeStationToDB(Station station){
         try{
             if (validateTableNameExist("station")){
                 return;
@@ -127,7 +129,7 @@ public class StoreDataToDB {
             String sql2="insert into station(id,x,y) values(?,?,?)";
             connectDB conn2 = new connectDB(sql2);
 
-            List<List<?>> stationList= dem.getStation();
+            List<List<?>> stationList= station.getStation();
 
             for(int i=0;i<stationList.size();i++){
                 conn2.statement.setInt(1,i+1);
