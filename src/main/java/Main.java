@@ -9,6 +9,7 @@ import analysis.*;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
@@ -82,11 +83,11 @@ public class Main {
         } catch (FileNotFoundException e) {
             System.out.println(e);
         }
-        Dir_get.direction(dems,"src\\main\\results\\dir.asc");
-        Upvalue_get.up_value_get(Dir_get.direction(dems,"src\\main\\results\\dir.asc"),"src\\main\\results\\up_value.asc");
-        Accumulation_get.accum_get(Dir_get.direction(dems,"src\\main\\results\\dir.asc"),"src\\main\\results\\acc.asc");
-        River_get.river_get(Accumulation_get.accum_get(Dir_get.direction(dems,"src\\main\\results\\dir.asc")
-            ,"src\\main\\results\\acc.asc"),3,"src\\main\\results\\river.asc");
+        Dir_get.direction(dems);
+        Upvalue_get.up_value_get(Dir_get.direction(dems));
+        Accumulation_get.accum_get(Dir_get.direction(dems));
+        River_get.river_get(Accumulation_get.accum_get(Dir_get.direction(dems)),5);
+
 
     }
 }

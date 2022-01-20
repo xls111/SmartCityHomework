@@ -7,20 +7,22 @@ import java.io.IOException;
 public class Accumulation_get {
     //计算河流源头点
     public static int[][] Origin(int[][] dir) throws IOException {
-        int[][] result =new int[236][218];
+        int nrows=236;
+        int ncols=218;
+        int[][] result =new int[nrows][ncols];
         int i;int j;
-        for(i=0;i<236;i++){
-            for(j=0;j<218;j++){
+        for(i=0;i<nrows;i++){
+            for(j=0;j<ncols;j++){
                 int count=0;
                 if(dir[i][j]!=-9999){
                     //搜寻像元周围八方向
-                    if(i+1<236&&j-1>=0){
-                        if(dir[i+1][j-1]==8){
+                    if(i+1<nrows&&j-1>=0){
+                        if(dir[i+1][j-1]==128){
                             count++;
                         }
                     }
                     if(j-1>=0){
-                        if(dir[i][j-1]==4){
+                        if(dir[i][j-1]==1){
                             count++;
                         }
                     }
@@ -30,27 +32,27 @@ public class Accumulation_get {
                         }
                     }
                     if(i-1>=0){
-                        if(dir[i-1][j]==1){
+                        if(dir[i-1][j]==4){
                             count++;
                         }
                     }
-                    if(i-1>=0&&j+1<218){
-                        if(dir[i-1][j+1]==128){
+                    if(i-1>=0&&j+1<ncols){
+                        if(dir[i-1][j+1]==8){
                             count++;
                         }
                     }
-                    if(j+1<218){
-                        if(dir[i][j+1]==64){
+                    if(j+1<ncols){
+                        if(dir[i][j+1]==16){
                             count++;
                         }
                     }
-                    if(j+1<218&&i+1<236){
+                    if(j+1<ncols&&i+1<nrows){
                         if(dir[i+1][j+1]==32){
                             count++;
                         }
                     }
-                    if(i+1<236){
-                        if(dir[i+1][j]==16){
+                    if(i+1<nrows){
+                        if(dir[i+1][j]==64){
                             count++;
                         }
                     }
@@ -73,6 +75,8 @@ public class Accumulation_get {
 
     //回溯法求解累计流量
     public static int Add(int[][] dir,int[][] Origin,int[][] acc,int i,int j){
+        int nrows=236;
+        int ncols=218;
         //回溯到源头点时，停止递归
         if(Origin[i][j]==1){
             acc[i][j]=0;
@@ -80,7 +84,7 @@ public class Accumulation_get {
         }
         //不为源头点时，朝八个方向寻找上游单元
         if(j-1>=0){
-            if(dir[i][j-1]==4){
+            if(dir[i][j-1]==1){
                 acc[i][j]+=Add(dir,Origin,acc,i,j-1);
                 acc[i][j]++;
             }
@@ -92,37 +96,37 @@ public class Accumulation_get {
             }
         }
         if(i-1>=0){
-            if(dir[i-1][j]==1){
+            if(dir[i-1][j]==4){
                 acc[i][j]+=Add(dir,Origin,acc,i-1,j);
                 acc[i][j]++;
             }
         }
-        if(j+1<218&&i-1>=0){
-            if(dir[i-1][j+1]==128){
+        if(j+1<ncols&&i-1>=0){
+            if(dir[i-1][j+1]==8){
                 acc[i][j]+=Add(dir,Origin,acc,i-1,j+1);
                 acc[i][j]++;
             }
         }
-        if(j+1<218){
-            if(dir[i][j+1]==64){
+        if(j+1<ncols){
+            if(dir[i][j+1]==16){
                 acc[i][j]+=Add(dir,Origin,acc,i,j+1);
                 acc[i][j]++;
             }
         }
-        if(j+1<218&&i+1<236){
+        if(j+1<ncols&&i+1<nrows){
             if(dir[i+1][j+1]==32){
                 acc[i][j]+=Add(dir,Origin,acc,i+1,j+1);
                 acc[i][j]++;
             }
         }
-        if(i+1<236){
-            if(dir[i+1][j]==16){
+        if(i+1<nrows){
+            if(dir[i+1][j]==64){
                 acc[i][j]+=Add(dir,Origin,acc,i+1,j);
                 acc[i][j]++;
             }
         }
-        if(i+1<236&&j-1>=0){
-            if(dir[i+1][j-1]==8){
+        if(i+1<nrows&&j-1>=0){
+            if(dir[i+1][j-1]==128){
                 acc[i][j]+=Add(dir,Origin,acc,i+1,j-1);
                 acc[i][j]++;
             }
@@ -131,24 +135,26 @@ public class Accumulation_get {
     }
 
     //计算累计流
-    public static int[][] accum_get(int[][] dir,String filepath) throws IOException {
+    public static int[][] accum_get(int[][] dir) throws IOException {
+        int nrows=236;
+        int ncols=218;
         int i, j;
-        int[][] acc=new int[236][218];
-        for(i=0;i<236;i++){
-            for(j=0;j<218;j++){
+        int[][] acc=new int[nrows][ncols];
+        for(i=0;i<nrows;i++){
+            for(j=0;j<ncols;j++){
                 acc[i][j]=0;
             }
         }
-        int[][] Origin=new int[236][218];
-        for(i=0;i<236;i++){
-            for(j=0;j<218;j++){
+        int[][] Origin=new int[nrows][ncols];
+        for(i=0;i<nrows;i++){
+            for(j=0;j<ncols;j++){
                 Origin[i][j]=0;
             }
         }
         Origin=Origin(dir);
         //便利整个格网，对非no_data单元进行回溯法递归求解
-        for (i = 0; i < 236; i++) {
-            for (j = 0; j < 218; j++) {
+        for (i = 0; i < nrows; i++) {
+            for (j = 0; j < ncols; j++) {
                 if(dir[i][j]==-9999){
                     acc[i][j]=-9999;
                 }
@@ -159,22 +165,6 @@ public class Accumulation_get {
                 }
             }
         }
-        //保存结果
-        File output= new File(filepath);
-        FileWriter out =new FileWriter(output);
-        out.write("ncols         218"+"\n");
-        out.write("nrows         236"+"\n");
-        out.write("xllcorner     466515.47101027"+"\n");
-        out.write("yllcorner     2626221.2241437"+"\n");
-        out.write("cellsize      90"+"\n");
-        out.write("NODATA_value  -9999"+"\n");
-        for(i=0;i<236;i++){
-            for(j=0;j<218;j++){
-                out.write(acc[i][j]+" ");
-            }
-            out.write("\n");
-        }
-        out.close();
         return acc;
     }
 }

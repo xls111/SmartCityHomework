@@ -5,18 +5,20 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class River_get {
-    public static void river_get(int[][] acc,int thresold,String filepath) throws IOException {
-        int river[][] = new int[236][218];
+    public static int[][] river_get(int[][] acc,int thresold) throws IOException {
+        int nrows=236;
+        int ncols=218;
+        int river[][] = new int[nrows][ncols];
         int i=0;
         int j=0;
-        for(i=0;i<236;i++){
-            for(j=0;j<218;j++){
+        for(i=0;i<nrows;i++){
+            for(j=0;j<ncols;j++){
                 river[i][j]=0;
             }
         }
         //进行阈值判断
-        for(i=0;i<236;i++){
-            for(j=0;j<218;j++){
+        for(i=0;i<nrows;i++){
+            for(j=0;j<ncols;j++){
                 if(acc[i][j]==-9999){
                     river[i][j]=-9999;
                 }
@@ -28,21 +30,6 @@ public class River_get {
                 }
             }
         }
-        //保存结果
-        File output= new File(filepath);
-        FileWriter out =new FileWriter(output);
-        out.write("ncols         218"+"\n");
-        out.write("nrows         236"+"\n");
-        out.write("xllcorner     466515.47101027"+"\n");
-        out.write("yllcorner     2626221.2241437"+"\n");
-        out.write("cellsize      90"+"\n");
-        out.write("NODATA_value  -9999"+"\n");
-        for(i=0;i<236;i++){
-            for(j=0;j<218;j++){
-                out.write(river[i][j]+" ");
-            }
-            out.write("\n");
-        }
-        out.close();
+        return river;
     }
 }
