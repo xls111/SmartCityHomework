@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class River_get {
+public class StreamExtractiion {
     public static void river_get(int[][] acc,int thresold,String filepath) throws IOException {
         int river[][] = new int[236][218];
         int i=0;

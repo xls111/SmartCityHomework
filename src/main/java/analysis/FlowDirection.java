@@ -5,9 +5,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Arrays;
 
-public class Dir_get {
+public class FlowDirection {
     //计算流向
-    public static int[][] direction(int dem_value[][],String filepath) throws IOException {
+    public static int[][] direction(int dem_value[][]) throws IOException {
         int[][] dir = new int[236][218];
         //先将流向均赋予为null值
         for (int i = 0; i < 236; i++) {
@@ -217,22 +217,7 @@ public class Dir_get {
                 }
             }
         }
-        //保存结果
-        File output= new File(filepath);
-        FileWriter out =new FileWriter(output);
-        out.write("ncols         218"+"\n");
-        out.write("nrows         236"+"\n");
-        out.write("xllcorner     466515.47101027"+"\n");
-        out.write("yllcorner     2626221.2241437"+"\n");
-        out.write("cellsize      90"+"\n");
-        out.write("NODATA_dem_value  -9999"+"\n");
-        for(int i=0;i<236;i++){
-            for(int j=0;j<218;j++){
-                out.write(dir[i][j]+" ");
-            }
-            out.write("\n");
-        }
-        out.close();
+
         return dir;
     }
 }

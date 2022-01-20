@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class Accumulation_get {
+public class FlowAccumulation {
     //计算河流源头点
     public static int[][] Origin(int[][] dir) throws IOException {
         int[][] result =new int[236][218];
@@ -159,6 +159,10 @@ public class Accumulation_get {
                 }
             }
         }
+        return acc;
+    }
+
+    public void writeFlowAccumulationToFile(int[][] accum, String filepath) throws IOException {
         //保存结果
         File output= new File(filepath);
         FileWriter out =new FileWriter(output);
@@ -168,13 +172,12 @@ public class Accumulation_get {
         out.write("yllcorner     2626221.2241437"+"\n");
         out.write("cellsize      90"+"\n");
         out.write("NODATA_value  -9999"+"\n");
-        for(i=0;i<236;i++){
-            for(j=0;j<218;j++){
-                out.write(acc[i][j]+" ");
+        for(int i=0;i<236;i++){
+            for(int j=0;j<218;j++){
+                out.write(accum[i][j]+" ");
             }
             out.write("\n");
         }
         out.close();
-        return acc;
     }
 }
