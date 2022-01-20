@@ -18,6 +18,7 @@ public class Aspect {
                     dz_dy=((Dem[i+1][j-1]+2*Dem[i+1][j]+Dem[i+1][j+1])-(Dem[i-1][j-1]+2*Dem[i-1][j]+Dem[i-1][j+1]))/8;
                     aspect[i][j]= Math.atan2(dz_dy,-dz_dx)*180/Math.PI;
 
+                    //将角度转换至0-360
                     if(aspect[i][j]<0)
                         aspect[i][j]=90-aspect[i][j];
                     else if(aspect[i][j]>90)
