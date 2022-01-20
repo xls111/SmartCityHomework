@@ -14,7 +14,7 @@ public class Grid {
     private double yllcorner;                   //左下角纵坐标
     private double cellsize;             //网格大小
     private int NODATA_value;            //无数据时的保留值
-    private double[][] map;              //流量网格
+    private RainSite[][] sites;              //流量网格
 
     /**
      * domain.Grid 无参构造函数，初始化网格设置
@@ -25,7 +25,7 @@ public class Grid {
         this.rows = 10;
         this.cols = 10;
         this.cellsize = 100;
-        this.map = new double[this.rows][this.cols];
+        this.sites = new RainSite[this.rows][this.cols];
         this.NODATA_value = -9999;
     }
 
@@ -38,16 +38,16 @@ public class Grid {
      * @param by           左下角纵坐标
      * @param cellsize     网格宽度
      * @param NODATA_value 无数据时的保留值
-     * @param map          流量网格
+     * @param sites          流量网格
      */
-    public Grid(int rows, int cols, double bx, double by, double cellsize, int NODATA_value, double[][] map) {
+    public Grid(int rows, int cols, double bx, double by, double cellsize, int NODATA_value, RainSite[][] sites) {
         this.rows = rows;
         this.cols = cols;
         this.xllcorner = bx;
         this.yllcorner = by;
         this.cellsize = cellsize;
         this.NODATA_value = NODATA_value;
-        this.map = map;
+        this.sites = sites;
     }
 
     /**
@@ -119,12 +119,12 @@ public class Grid {
         this.NODATA_value = NODATA_value;
     }
 
-    public double[][] getMap() {
-        return map;
+    public RainSite[][] getSites() {
+        return sites;
     }
 
-    public void setMap(double[][] map) {
-        this.map = map;
+    public void setSites(RainSite[][] sites) {
+        this.sites = sites;
     }
 }
 

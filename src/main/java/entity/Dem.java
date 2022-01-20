@@ -10,10 +10,6 @@ public class Dem {
 
     private List<List<Double>> dem = new ArrayList<List<Double>>();
 
-//    private List<List<?>> station = new ArrayList<List<?>>();
-//
-//    private List<List<?>> rain = new ArrayList<List<?>>();
-
     public String getConfigPath() {
         return configPath;
     }
@@ -38,19 +34,5 @@ public class Dem {
         this.dem = dem;
     }
 
-//    public List<List<?>> getStation() {
-//        return station;
-//    }
-//
-//    public void setStation(List<List<?>> station) {
-//        this.station = station;
-//    }
-//
-//    public List<List<?>> getRain() {
-//        return rain;
-//    }
-//
-//    public void setRain(List<List<?>> rain) {
-//        this.rain = rain;
-//    }
+
 }

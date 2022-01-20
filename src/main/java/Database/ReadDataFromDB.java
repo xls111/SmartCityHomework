@@ -1,6 +1,7 @@
 package Database;
 
 import entity.GridFileHead;
+import entity.RainSite;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -23,20 +24,42 @@ public class ReadDataFromDB {
                 System.out.println(p);
                 int q = id - p * cols - 1;
                 demData[p][q] = resultSet.getDouble("dem");
-//                double x=resultSet.getDouble("x");
-//                double y=resultSet.getDouble("y");
             }
-            for (int m = 0; m < rows; m++) {
-                for (int n = 0; n < cols; n++) {
-                    System.out.print(demData[m][n] + " ");
-                }
-                System.out.println();
-            }
+
             return demData;
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return new double[0][];
+    }
+
+    public RainSite[][] initSitesFromDB(GridFileHead head){
+        try {
+            String sql1 = "select * from dem";
+            connectDB conn = new connectDB(sql1);
+            ResultSet resultSet = conn.statement.executeQuery();
+            int rows = head.nrows;
+            int cols = head.ncols;
+
+            RainSite[][] sitesData = new RainSite[rows][cols];
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                int p = (int) Math.floor((id - 1) / cols);
+                int q = id - p * cols - 1;
+                sitesData[p][q] = new RainSite();
+                double x=resultSet.getDouble("x");
+                sitesData[p][q].setX(x);
+                double y=resultSet.getDouble("y");
+                sitesData[p][q].setY(y);
+                double elevation = resultSet.getDouble("dem");
+                sitesData[p][q].setElevation(elevation);
+            }
+            return sitesData;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return new RainSite[0][];
     }
 
     public List<List<?>> readStationFromDB() {
