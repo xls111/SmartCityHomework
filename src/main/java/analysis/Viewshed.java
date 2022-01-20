@@ -71,7 +71,7 @@ public class Viewshed {
                             temList.add(temPoint1);
                         }
                         // 沿纵轴方向遍历，既查询与网格横轴的交点
-                        for (var n = 0; n <= Math.abs(dy)-1; n++) {
+                        for (int n = 0; n <= Math.abs(dy)-1; n++) {
                             Point temPoint2 = new Point();
                             
                             //根据dy正负确定向上或向下取整
@@ -126,7 +126,7 @@ public class Viewshed {
 //                         gridList.addAll(hs);
                         double max=Dem[i][j];
                         for(int kk=0;kk<gridList.size();kk++){
-                            if((gridList.get(kk).X-1==x1&& gridList.get(kk).Y-1==y1)||(gridList.get(kk).X-1==i&& gridList.get(kk).Y-1==j))
+                            if((gridList.get(kk).X-1==pointCoordinateX&& gridList.get(kk).Y-1==pointCoordinateY)||(gridList.get(kk).X-1==i&& gridList.get(kk).Y-1==j))
                                 continue;
                             else if(Dem[(int) gridList.get(kk).X-1][(int) gridList.get(kk).Y-1]>max)
                                 max=Dem[(int) gridList.get(kk).X-1][(int) gridList.get(kk).Y-1];
