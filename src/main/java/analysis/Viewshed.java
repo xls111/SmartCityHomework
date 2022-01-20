@@ -5,7 +5,7 @@ import java.lang.Math;
 import java.util.ArrayList;
 //import java.util.HashSet;
 
-public class viewshed {
+public class Viewshed {
     public static double[][] View(double pointCoordinateX,double pointCoordinateY, double Dem[][],int nrows,int ncols,double Nodata) throws IOException {
         //可视域分析
         double[][] view=new double[nrows][ncols];
@@ -111,5 +111,6 @@ public class viewshed {
                     }
                 }
         }
+        return view;
     }
 }
