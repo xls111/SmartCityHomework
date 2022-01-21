@@ -13,6 +13,7 @@ public class Viewshed {
         //可视域分析
         double[][] view = new double[nrows][ncols];
 
+        //定义Point类
         class Point {
             double X;
             double Y;
@@ -31,6 +32,7 @@ public class Viewshed {
         //以每个像元中心作为起点
         Point startPoint = new Point(pointCoordinateX + 0.5, pointCoordinateY + 0.5);
 
+        //判断是否为有效点
         if (Dem[(int) pointCoordinateX][(int) pointCoordinateY] == Nodata)
             System.out.println("The point is not exist");
         else {
@@ -128,6 +130,7 @@ public class Viewshed {
 //                         gridList.clear();
 //                         gridList.addAll(hs);
                         double max = Dem[i][j];
+                        //判断所经像元高程值是否大于目标点
                         for (int kk = 0; kk < gridList.size(); kk++) {
                             if ((gridList.get(kk).X - 1 == pointCoordinateX && gridList.get(kk).Y - 1 == pointCoordinateY) || (gridList.get(kk).X - 1 == i && gridList.get(kk).Y - 1 == j))
                                 continue;
