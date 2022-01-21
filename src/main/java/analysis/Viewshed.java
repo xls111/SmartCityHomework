@@ -10,15 +10,18 @@ public class Viewshed {
         //可视域分析
         double[][] view=new double[nrows][ncols];
 
+        //point类定义
         class Point{
             double X;
             double Y;
 
+            //双参数构造函数
             public Point(double x,double y){
                 X=x;
                 Y=y;
             }
 
+            //无参构造函数
             public Point(){
                 X=0;
                 Y=0;
@@ -28,6 +31,7 @@ public class Viewshed {
         //以每个像元中心作为起点
         Point startPoint=new Point(pointCoordinateX+0.5,pointCoordinateY+0.5);
 
+        //判断是否为有效点
         if(Dem[(int) pointCoordinateX][(int) pointCoordinateY]==Nodata)
             System.out.println("The point is not exist");
         else {
@@ -124,6 +128,7 @@ public class Viewshed {
 //                         hs.addAll(gridList);
 //                         gridList.clear();
 //                         gridList.addAll(hs);
+                        //判断有无高程大于目标点
                         double max=Dem[i][j];
                         for(int kk=0;kk<gridList.size();kk++){
                             if((gridList.get(kk).X-1==pointCoordinateX&& gridList.get(kk).Y-1==pointCoordinateY)||(gridList.get(kk).X-1==i&& gridList.get(kk).Y-1==j))
@@ -136,6 +141,7 @@ public class Viewshed {
                         else {
                             view[i][j] = 1;
                         }
+                        //定义观察点值为2
                         view[(int) pointCoordinateX][(int) pointCoordinateY]=2;
                     }
                 }
