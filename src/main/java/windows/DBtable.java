@@ -15,7 +15,7 @@ public class DBtable extends JFrame {
     private JTable table;
     private JPanel panel;
     private JScrollPane scrollpane;
-    private JButton button1, button2, button3;
+    private JButton button1, button2, button3,button4;
     private JTextArea text1, text2, text3,text4;
     private List<Dem> dem;
 
@@ -50,6 +50,7 @@ public class DBtable extends JFrame {
             button1 = new JButton("添加");
             button2 = new JButton("删除");
             button3 = new JButton("更新");
+            button4 = new JButton("图像展示");
             text1.setBorder(BorderFactory.createLineBorder(Color.gray, 2));
             text2.setBorder(BorderFactory.createLineBorder(Color.gray, 2));
             text3.setBorder(BorderFactory.createLineBorder(Color.gray, 2));
@@ -72,11 +73,26 @@ public class DBtable extends JFrame {
             panel.add(button1);
             panel.add(button2);
             panel.add(button3);
-
+            panel.add(button4);
         }
+        button4.addActionListener(new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                picture m=new picture();
+                JFrame f=new JFrame();
+                f.setTitle("Dem文件图像");
+                f.add(m);
+                f.setSize(218*2,236*2);
+                f.setLocation(800, 300);
+                //f.setLayout(null);
+                f.setVisible(true);
+            }
+        });
         return panel;
 
     }
+
 
     // 设置Jtable方法
     private void setJTable(JTable table) {
