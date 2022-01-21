@@ -51,7 +51,7 @@ public class ThreadOperation implements Runnable{
 		}
     }
 
-	public double[][][] MultiThread() throws IOException {
+	public static double[][][] MultiThread() throws IOException {
 		double[][][] re = new double[4][][];
 		ThreadOperation[] thr = null;
 		thr[0] = new ThreadOperation("Aspect");
@@ -63,5 +63,9 @@ public class ThreadOperation implements Runnable{
 			re[i] = thr[i].result;
 		}
 		return re;
+	}
+
+	public static void main(String[] args) throws IOException {
+		double[][][] re = MultiThread();
 	}
 }
