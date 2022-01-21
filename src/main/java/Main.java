@@ -15,6 +15,7 @@ public class Main {
     public static void main(String[] args) throws IOException {
        //testIDw();
        //testThiessen();
+        testStoreDataToDB();
         Grid grid = configGrid();
         testStoreFlowDirectionToDB();
         testReadFlowDirectionFromDB();
@@ -26,6 +27,7 @@ public class Main {
         testReadFlowLengthFromDB();
         testReadSlopeFromDB();
         testReadFlowAccumulationFromDB();
+        testStoreViewshed();
     }
 
     public static Grid configGrid() throws IOException {
@@ -222,6 +224,13 @@ public class Main {
         ReadDataFromDB reader = new ReadDataFromDB();
         double[][] length = reader.readFlowLengthFromDB(head);
         FileDao.writeDoubleArray2DtoGridFile("src/main/results/FlowLength.asc",length,head);
+    }
+
+    public static void testStoreViewshed() throws IOException {
+        String path = "src\\main\\resources\\dem.asc";
+        GridFileHead gridFileHead = FileDao.ReadGridFileHead(path);
+        double[][] view = Viewshed.getView(118,50,gridFileHead);
+        FileDao.writeDoubleArray2DtoGridFile("src/main/results/viewshed.asc",view,gridFileHead);
     }
 
     public static void testSetRefRainSites() throws IOException {
