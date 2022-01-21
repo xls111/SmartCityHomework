@@ -26,12 +26,12 @@ public class ReadDataFromDB {
 //                double x=resultSet.getDouble("x");
 //                double y=resultSet.getDouble("y");
             }
-            for (int m = 0; m < rows; m++) {
-                for (int n = 0; n < cols; n++) {
-                    System.out.print(demData[m][n] + " ");
-                }
-                System.out.println();
-            }
+//            for (int m = 0; m < rows; m++) {
+//                for (int n = 0; n < cols; n++) {
+//                    System.out.print(demData[m][n] + " ");
+//                }
+//                System.out.println();
+//            }
             return demData;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -55,7 +55,7 @@ public class ReadDataFromDB {
                 tempList.add(x);
                 tempList.add(y);
                 station.add(tempList);
-                System.out.println("id:" + id + "x:" + x + "y:" + y);
+                //System.out.println("id:" + id + "x:" + x + "y:" + y);
             }
             return station;
         } catch (SQLException e) {
@@ -83,7 +83,7 @@ public class ReadDataFromDB {
                 tempList.add(lianxing);
                 tempList.add(fengmulang);
                 rain.add(tempList);
-                System.out.println("id:" + id + "flow:" + flow);
+                //System.out.println("id:" + id + "flow:" + flow);
             }
             return rain;
         } catch (SQLException e) {
