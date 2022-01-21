@@ -150,7 +150,7 @@ public class Viewshed {
     }
 
 
-    public static double[][] View(double pointCoordinateX, double pointCoordinateY, GridFileHead head) throws IOException {
+    public static double[][] getView(double pointCoordinateX, double pointCoordinateY, GridFileHead head) throws IOException {
         int rows = head.nrows;
         int cols = head.ncols;
         int noData = head.NODATA_value;
