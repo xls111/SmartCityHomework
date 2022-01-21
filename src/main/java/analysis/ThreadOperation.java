@@ -64,9 +64,4 @@ public class ThreadOperation implements Runnable{
 		}
 		return re;
 	}
-
-	public static void main(String[] args) throws IOException {
-		double[][][] re = MultiThread();
-		int i=0;
-	}
 }
