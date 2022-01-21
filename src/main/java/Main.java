@@ -16,12 +16,12 @@ public class Main {
        //testIDw();
        //testThiessen();
         Grid grid = configGrid();
-//        testStoreFlowDirectionToDB();
-//        testReadFlowDirectionFromDB();
-//        testStoreFlowAccumulationToDB();
-//        testStoreSlopeToDB();
-//        testStoreFlowLengthToDB();
-//        testStoreAspectToDB();
+        testStoreFlowDirectionToDB();
+        testReadFlowDirectionFromDB();
+        testStoreFlowAccumulationToDB();
+        testStoreSlopeToDB();
+        testStoreFlowLengthToDB();
+        testStoreAspectToDB();
         testReadAspectFromDB();
         testReadFlowLengthFromDB();
         testReadSlopeFromDB();
