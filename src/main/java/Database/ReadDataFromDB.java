@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ReadDataFromDB {
-    public double[][] readDemFromDB(GridFileHead head) {
+    public static double[][] readDemFromDB(GridFileHead head) {
         try {
             String sql1 = "select * from dem";
             connectDB conn = new connectDB(sql1);
