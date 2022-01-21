@@ -11,6 +11,7 @@ import java.io.IOException;
 public class Slope {
     public static double[][] getSlope(double Dem[][], int nrows, int cols, double Nodata, double cellsize) throws IOException{
 
+        //定义坡度矩阵
         double[][] slope=new double[nrows][cols];
 
         for (int i=0;i<nrows;i++)
@@ -22,8 +23,11 @@ public class Slope {
                     slope[i][j]=Nodata;
 
                 else{
+                    //计算x方向变化量
                     dz_dx=((Dem[i-1][j+1]+2*Dem[i][j+1]+Dem[i+2][j+1])-(Dem[i-1][j-1]+2*Dem[i][j-1]+Dem[i+2][j-1]))/(8*cellsize);
+                    //计算y方向变化量
                     dz_dy=((Dem[i+1][j-1]+2*Dem[i+1][j]+Dem[i+1][j+1])-(Dem[i-1][j-1]+2*Dem[i-1][j]+Dem[i-1][j+1]))/(8*cellsize);
+                    //计算坡度
                     slope[i][j]= Math.atan(Math.sqrt(Math.pow(dz_dx,2.0)+Math.pow(dz_dy,2.0)))*180/Math.PI;
                 }
             }
