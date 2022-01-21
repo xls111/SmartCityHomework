@@ -1,18 +1,17 @@
 package analysis;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import Database.ReadDataFromDB;
+import entity.GridFileHead;
 
 public class Aspect {
-    public static double[][] aspect(double Dem[][],int nrows,int nclos,double Nodata,double cellsize){
-        double[][] aspect=new double[nrows][nclos];
+    public static double[][] getAspect(double Dem[][], int nrows, int ncols, double Nodata, double cellsize){
+        double[][] aspect=new double[nrows][ncols];
 
         for (int i=0;i<nrows;i++)
-            for (int j=0;j<nclos;j++){
+            for (int j=0;j<ncols;j++){
                 double dz_dx;
                 double dz_dy;
-                if(i==0||j==0||i==nrows||j==nclos||Dem[i][j]==Nodata)
+                if(i==0||j==0||i==nrows||j==ncols||Dem[i][j]==Nodata)
                     aspect[i][j]=Nodata;
 
                 else{
@@ -30,6 +29,16 @@ public class Aspect {
             }
 
         return aspect;
+    }
 
+    public static double[][] getAspect(GridFileHead head){
+        int rows = head.nrows;
+        int cols = head.ncols;
+        int noData = head.NODATA_value;
+        double cellSize = head.cellsize;
+        ReadDataFromDB reader = new ReadDataFromDB();
+        double[][] dem = reader.readDemFromDB(head);
+
+        return getAspect(dem,rows,cols,noData,cellSize);
     }
 }

@@ -29,9 +29,9 @@ public class StoreDataToDB {
         return false;
     }
 
-    public void storeDemToDB(Dem dem){
+    public void storeDemToDB(Dem dem) {
         try {
-            if (validateTableNameExist("dem")){
+            if (validateTableNameExist("dem")) {
                 return;
             }
 
@@ -45,19 +45,19 @@ public class StoreDataToDB {
             connectDB conn1 = new connectDB(sql1);
             conn1.statement.executeUpdate();
 
-            String sql2="insert into dem(id,x,y,dem) values(?,?,?,?)";
+            String sql2 = "insert into dem(id,x,y,dem) values(?,?,?,?)";
             connectDB conn2 = new connectDB(sql2);
-            int k=0;
+            int k = 0;
             List<List<Double>> demList = dem.getDem();
             GridFileHead head = dem.getHead();
             double cellSize = head.cellsize;
             double xllcorner = head.xllcorner;
             double yllcorner = head.yllcorner;
             int nrows = head.nrows;
-            for(int i=0;i< demList.size();i++) {
+            for (int i = 0; i < demList.size(); i++) {
                 for (int j = 0; j < demList.get(j).size(); j++) {
-                    k=k+1;
-                    conn2.statement.setInt(1,k);
+                    k = k + 1;
+                    conn2.statement.setInt(1, k);
                     conn2.statement.setDouble(2, j * cellSize + 0.5 * cellSize + xllcorner);
                     conn2.statement.setDouble(3, (nrows - i - 1) * cellSize + 0.5 * cellSize + yllcorner);
                     conn2.statement.setDouble(4, demList.get(i).get(j));
@@ -68,15 +68,15 @@ public class StoreDataToDB {
 
             System.out.printf("dem已存入数据库");
 
-        }catch(SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
     }
 
-    public void storeRainToDB(Rain rain){
+    public void storeRainToDB(Rain rain) {
         try {
-            if (validateTableNameExist("rain1")){
+            if (validateTableNameExist("rain1")) {
                 return;
             }
 
@@ -91,31 +91,31 @@ public class StoreDataToDB {
             connectDB conn1 = new connectDB(sql1);
             conn1.statement.executeUpdate();
 
-            String sql2="insert into rain1(id,flow,huanglongdai,lianxing,fengmulang) values(?,?,?,?,?)";
+            String sql2 = "insert into rain1(id,flow,huanglongdai,lianxing,fengmulang) values(?,?,?,?,?)";
             connectDB conn2 = new connectDB(sql2);
             List<List<?>> rainList = rain.getRain();
-            for(int i=0;i< rainList.size();i++){
-                conn2.statement.setInt(1,i+1);
+            for (int i = 0; i < rainList.size(); i++) {
+                conn2.statement.setInt(1, i + 1);
                 conn2.statement.setDouble(2, (double) rainList.get(i).get(1));
-                conn2.statement.setInt(3,(int) rainList.get(i).get(2));
-                conn2.statement.setInt(4,(int) rainList.get(i).get(3));
-                conn2.statement.setInt(5,(int) rainList.get(i).get(4));
+                conn2.statement.setInt(3, (int) rainList.get(i).get(2));
+                conn2.statement.setInt(4, (int) rainList.get(i).get(3));
+                conn2.statement.setInt(5, (int) rainList.get(i).get(4));
                 conn2.statement.executeUpdate();
             }
 
-        }catch(SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
     }
 
-    public void storeStationToDB(Station station){
-        try{
-            if (validateTableNameExist("station")){
+    public void storeStationToDB(Station station) {
+        try {
+            if (validateTableNameExist("station")) {
                 return;
             }
 
-            String sql1="CREATE TABLE IF NOT EXISTS station (" +
+            String sql1 = "CREATE TABLE IF NOT EXISTS station (" +
                     "id int(4) not null," +
                     "x  double," +
                     "y  double," +
@@ -126,20 +126,64 @@ public class StoreDataToDB {
             conn1.statement.executeUpdate();
 
             System.out.printf("建立站点属性表成功");
-            String sql2="insert into station(id,x,y) values(?,?,?)";
+            String sql2 = "insert into station(id,x,y) values(?,?,?)";
             connectDB conn2 = new connectDB(sql2);
 
-            List<List<?>> stationList= station.getStation();
+            List<List<?>> stationList = station.getStation();
 
-            for(int i=0;i<stationList.size();i++){
-                conn2.statement.setInt(1,i+1);
+            for (int i = 0; i < stationList.size(); i++) {
+                conn2.statement.setInt(1, i + 1);
                 conn2.statement.setDouble(2, (double) stationList.get(i).get(3));
                 conn2.statement.setDouble(3, (double) stationList.get(i).get(4));
                 conn2.statement.executeUpdate();
             }
-        } catch(SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
     }
+
+    public void storeFlowAccumulationToDB(double[][] acc,GridFileHead head) {
+        try {
+            if (validateTableNameExist("FlowAccumulation")) {
+                return;
+            }
+
+            String sql1 = "CREATE TABLE IF NOT EXISTS FlowAccumulation (" +
+                    "id int(4) not null," +
+                    "x  double," +
+                    "y  double," +
+                    "accumulation  double" +
+                    "PRIMARY KEY (`id`)" +
+                    ");";
+
+            connectDB conn1 = new connectDB(sql1);
+            conn1.statement.executeUpdate();
+
+            System.out.printf("建立流量属性表成功");
+            String sql2 = "insert into FlowAccumulation(id,x,y,accumulation) values(?,?,?,?)";
+            connectDB conn2 = new connectDB(sql2);
+            int k = 0;
+
+            double cellSize = head.cellsize;
+            double xllcorner = head.xllcorner;
+            double yllcorner = head.yllcorner;
+            int nrows = head.nrows;
+
+            for (int i = 0; i < acc.length; i++) {
+                for (int j = 0; j < acc[i].length; j++) {
+                    k = k + 1;
+                    conn2.statement.setInt(1, k);
+                    conn2.statement.setDouble(2, j * cellSize + 0.5 * cellSize + xllcorner);
+                    conn2.statement.setDouble(3, (nrows - i - 1) * cellSize + 0.5 * cellSize + yllcorner);
+                    conn2.statement.setDouble(4, acc[i][j]);
+                    conn2.statement.executeUpdate();
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 }

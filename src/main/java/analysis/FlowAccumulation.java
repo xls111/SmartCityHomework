@@ -135,7 +135,7 @@ public class FlowAccumulation {
     }
 
     //计算累计流
-    public static int[][] accum_get(int[][] dir) throws IOException {
+    public static int[][] GetAccumulation(int[][] dir) throws IOException {
         int nrows=236;
         int ncols=218;
         int i, j;

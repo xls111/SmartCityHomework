@@ -6,9 +6,12 @@ import javax.swing.text.BadLocationException;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileReader;
+import java.io.Reader;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 //dem数据表的管理界面
 public class DBtable extends JFrame {
@@ -370,7 +373,7 @@ public class DBtable extends JFrame {
         //此处输入自己的数据库名称、用户、密码
         String url = "jdbc:mysql://localhost:3306/smart_city";
         String user = "root";
-        String passwd = "admin";
+        String passwd = "root";
         Connection conn = null;
         Statement stmt = null;
         ResultSet rs = null;
@@ -379,6 +382,12 @@ public class DBtable extends JFrame {
         public Connection getConnection() {
             try {
                 Class.forName("com.mysql.jdbc.Driver");
+                Reader fr = new FileReader("src/main/resources/db.properties");
+                Properties prop = new Properties();
+                prop.load(fr);
+                String url = prop.getProperty("db_url", "jdbc:mysql://localhost:3306/smart_city");
+                String user = prop.getProperty("db_username", "root");
+                String passwd = prop.getProperty("db_password", "root");
                 conn = DriverManager.getConnection(url, user, passwd);
                 stmt = conn.createStatement();
             } catch (Exception e) {

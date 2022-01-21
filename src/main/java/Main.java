@@ -13,7 +13,38 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) throws IOException {
        //testIDw();
-       testThiessen();
+       //testThiessen();
+        Grid grid = configGrid();
+
+    }
+
+    public static Grid configGrid() throws IOException {
+        String path = "src\\main\\resources\\dem.asc";
+        Grid grid = new Grid();
+        GridDao.initGridFromFile(grid,path);
+        GridFileHead head = FileDao.ReadGridFileHead(path);
+        ReadDataFromDB readData = new ReadDataFromDB();
+        RainSite[][] sitesData = readData.initSitesFromDB(head);
+        grid.setSites(sitesData);
+        return grid;
+    }
+
+    public static RainSite[] configRefSites(Grid grid) throws IOException {
+
+        ReadDataFromDB readData = new ReadDataFromDB();
+
+        List<List<?>> rainData = readData.readRainFromDB();
+        List<List<?>> stationData = readData.readStationFromDB();
+
+        InterpolationUtils utils = new InterpolationUtils();
+        RainSite[] refSite = utils.setRefRainSites(rainData,stationData,2);
+        RainSite[] sites = new RainSite[refSite.length];
+        for(int i = 0;i< refSite.length;i++){
+            sites[i] = utils.findSite(grid,refSite[i]);
+            sites[i].setRain(refSite[i].getRain());
+            sites[i].setElevation(refSite[i].getElevation());
+        }
+        return sites;
     }
 
     public static void testIDw() throws IOException {
