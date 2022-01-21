@@ -81,6 +81,8 @@ public class Main {
         IDWInterpolation.getAllRainByInterpolation(grid);
 
         GridDao.showGridSitesRain(grid);
+        double[][] rain = GridDao.getRainArrayFromGrid(grid);
+        FileDao.writeDoubleArray2DtoGridFile("src/main/results/IDWRain.asc",rain,head);
         System.out.println(".......");
     }
 
@@ -108,6 +110,8 @@ public class Main {
         ThiessenInterpolation.getAllRainByInterpolation(grid);
 
         GridDao.showGridSitesRain(grid);
+        double[][] rain = GridDao.getRainArrayFromGrid(grid);
+        FileDao.writeDoubleArray2DtoGridFile("src/main/results/ThiessenRain.asc",rain,head);
         System.out.println(".......");
     }
 
@@ -149,7 +153,7 @@ public class Main {
         GridFileHead head = FileDao.ReadGridFileHead(path);
         ReadDataFromDB reader = new ReadDataFromDB();
         int[][] directions = reader.readFlowDirectionFromDB(head);
-        FileDao.writeIntegerArray2DtoGridFile("src/main/resources/FlowDirection.txt",directions,head);
+        FileDao.writeIntegerArray2DtoGridFile("src/main/results/FlowDirection.asc",directions,head);
         FileDao.showArray2D(directions);
     }
 
@@ -167,7 +171,7 @@ public class Main {
         GridFileHead head = FileDao.ReadGridFileHead(path);
         ReadDataFromDB reader = new ReadDataFromDB();
         int[][] accumulation = reader.readFlowAccumulationFromDB(head);
-        FileDao.writeIntegerArray2DtoGridFile("src/main/resources/FlowAccumulation.txt",accumulation,head);
+        FileDao.writeIntegerArray2DtoGridFile("src/main/results/FlowAccumulation.asc",accumulation,head);
         FileDao.showArray2D(accumulation);
     }
 
@@ -184,7 +188,7 @@ public class Main {
         GridFileHead head = FileDao.ReadGridFileHead(path);
         ReadDataFromDB reader = new ReadDataFromDB();
         double[][] slope = reader.readSlopeFromDB(head);
-        FileDao.writeDoubleArray2DtoGridFile("src/main/resources/Slope.txt",slope,head);
+        FileDao.writeDoubleArray2DtoGridFile("src/main/results/Slope.asc",slope,head);
     }
 
     public static void testStoreAspectToDB() throws IOException {
@@ -200,7 +204,7 @@ public class Main {
         GridFileHead head = FileDao.ReadGridFileHead(path);
         ReadDataFromDB reader = new ReadDataFromDB();
         double[][] aspect = reader.readAspectFromDB(head);
-        FileDao.writeDoubleArray2DtoGridFile("src/main/resources/Aspect.txt",aspect,head);
+        FileDao.writeDoubleArray2DtoGridFile("src/main/results/Aspect.asc",aspect,head);
     }
 
     public static void testStoreFlowLengthToDB() throws IOException {
@@ -217,7 +221,7 @@ public class Main {
         GridFileHead head = FileDao.ReadGridFileHead(path);
         ReadDataFromDB reader = new ReadDataFromDB();
         double[][] length = reader.readFlowLengthFromDB(head);
-        FileDao.writeDoubleArray2DtoGridFile("src/main/resources/FlowLength.txt",length,head);
+        FileDao.writeDoubleArray2DtoGridFile("src/main/results/FlowLength.asc",length,head);
     }
 
     public static void testSetRefRainSites() throws IOException {

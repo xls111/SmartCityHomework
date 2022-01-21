@@ -18,7 +18,7 @@ public class GridDao {
         grid.setSites(new RainSite[head.nrows][head.ncols]);
     }
 
-    public static void showGridSitesRain(Grid grid){
+    public static void showGridSitesRain(Grid grid) {
         RainSite[][] sites = grid.getSites();
         for (RainSite[] siteRow : sites) {
             for (RainSite rainSite : siteRow) {
@@ -27,5 +27,17 @@ public class GridDao {
             System.out.println();
         }
     }
+
+    public static double[][] getRainArrayFromGrid(Grid grid) {
+        RainSite[][] sites = grid.getSites();
+        double[][] rain = new double[grid.getRows()][grid.getCols()];
+
+        for (int i = 0; i < sites.length; i++)
+            for (int j = 0; j < sites[i].length; i++) {
+                rain[i][j] = sites[i][j].getRain();
+            }
+        return rain;
+    }
+
 }
 
