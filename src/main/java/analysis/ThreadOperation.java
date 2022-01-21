@@ -53,7 +53,7 @@ public class ThreadOperation implements Runnable{
 
 	public static double[][][] MultiThread() throws IOException {
 		double[][][] re = new double[4][][];
-		ThreadOperation[] thr = null;
+		ThreadOperation[] thr = new ThreadOperation[4];
 		thr[0] = new ThreadOperation("Aspect");
 		thr[1] = new ThreadOperation("FlowDirection");
 		thr[2] = new ThreadOperation("HoleFilling");
@@ -67,5 +67,6 @@ public class ThreadOperation implements Runnable{
 
 	public static void main(String[] args) throws IOException {
 		double[][][] re = MultiThread();
+		int i=0;
 	}
 }
