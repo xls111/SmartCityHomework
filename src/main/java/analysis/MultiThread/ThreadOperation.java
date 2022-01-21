@@ -7,15 +7,14 @@ import analysis.HoleFilling;
 import analysis.Slope;
 import entity.GridFileHead;
 
-import java.io.FileReader;
 import java.io.IOException;
 
 public class ThreadOperation implements Runnable{
 
     private String method;
 
-    private double[][] result;
-
+    private double[][] doubleResults;
+    private int[][] intResults;
 
     public ThreadOperation(String method) throws IOException {
         this.method = method;
@@ -25,24 +24,24 @@ public class ThreadOperation implements Runnable{
 
         switch(method){
             case "Aspect":
-                result = Aspect.getAspect(head);
+                doubleResults = Aspect.getAspect(head);
                 break;
             case "FlowDirection":
                 try {
-                    result = FlowDirection.getFlowDirection(head);
-                    FileDao.showArray2D(result);
+                    intResults = FlowDirection.getFlowDirection(head);
+                    FileDao.showArray2D(intResults);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
                 break;
             case "HoleFilling":
-                result = HoleFilling.getHoleFilling(head);
-                FileDao.showArray2D(result);
+                doubleResults = HoleFilling.getHoleFilling(head);
+                FileDao.showArray2D(doubleResults);
                 break;
             case "Slope":
                 try {
-                    result = Slope.getSlope(head);
-                    FileDao.showArray2D(result);
+                    doubleResults = Slope.getSlope(head);
+                    FileDao.showArray2D(doubleResults);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -87,11 +86,19 @@ public class ThreadOperation implements Runnable{
         this.method = method;
     }
 
-    public double[][] getResult() {
-        return result;
+    public double[][] getDoubleResults() {
+        return doubleResults;
     }
 
-    public void setResult(double[][] result) {
-        this.result = result;
+    public void setDoubleResults(double[][] doubleResults) {
+        this.doubleResults = doubleResults;
+    }
+
+    public int[][] getIntResults() {
+        return intResults;
+    }
+
+    public void setIntResults(int[][] intResults) {
+        this.intResults = intResults;
     }
 }

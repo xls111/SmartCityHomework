@@ -1,5 +1,6 @@
 package Database;
 
+import entity.Grid;
 import entity.GridFileHead;
 import entity.RainSite;
 
@@ -113,5 +114,125 @@ public class ReadDataFromDB {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public int[][] readFlowDirectionFromDB(GridFileHead head){
+        try {
+            String sql1 = "select * from flowdirection";
+            connectDB conn = new connectDB(sql1);
+            ResultSet resultSet = conn.statement.executeQuery();
+            int rows = head.nrows;
+            int cols = head.ncols;
+
+            int[][] dirData = new int[rows][cols];
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                int p = (int) Math.floor((id - 1) / cols);
+                System.out.println(p);
+                int q = id - p * cols - 1;
+                dirData[p][q] = resultSet.getInt("direction");
+            }
+
+            return dirData;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return new int[0][];
+    }
+
+    public int[][] readFlowAccumulationFromDB(GridFileHead head){
+        try {
+            String sql1 = "select * from flowaccumulation";
+            connectDB conn = new connectDB(sql1);
+            ResultSet resultSet = conn.statement.executeQuery();
+            int rows = head.nrows;
+            int cols = head.ncols;
+
+            int[][] accData = new int[rows][cols];
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                int p = (int) Math.floor((id - 1) / cols);
+                System.out.println(p);
+                int q = id - p * cols - 1;
+                accData[p][q] = resultSet.getInt("accumulation");
+            }
+
+            return accData;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return new int[0][];
+    }
+
+    public double[][] readSlopeFromDB(GridFileHead head){
+        try {
+            String sql1 = "select * from slope";
+            connectDB conn = new connectDB(sql1);
+            ResultSet resultSet = conn.statement.executeQuery();
+            int rows = head.nrows;
+            int cols = head.ncols;
+
+            double[][] slopeData = new double[rows][cols];
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                int p = (int) Math.floor((id - 1) / cols);
+                System.out.println(p);
+                int q = id - p * cols - 1;
+                slopeData[p][q] = resultSet.getDouble("slope");
+            }
+
+            return slopeData;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return new double[0][];
+    }
+
+    public double[][] readAspectFromDB(GridFileHead head){
+        try {
+            String sql1 = "select * from aspect";
+            connectDB conn = new connectDB(sql1);
+            ResultSet resultSet = conn.statement.executeQuery();
+            int rows = head.nrows;
+            int cols = head.ncols;
+
+            double[][] aspectData = new double[rows][cols];
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                int p = (int) Math.floor((id - 1) / cols);
+                System.out.println(p);
+                int q = id - p * cols - 1;
+                aspectData[p][q] = resultSet.getDouble("aspect");
+            }
+
+            return aspectData;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return new double[0][];
+    }
+
+    public double[][] readFlowLengthFromDB(GridFileHead head){
+        try {
+            String sql1 = "select * from flowlength";
+            connectDB conn = new connectDB(sql1);
+            ResultSet resultSet = conn.statement.executeQuery();
+            int rows = head.nrows;
+            int cols = head.ncols;
+
+            double[][] flowLengthData = new double[rows][cols];
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                int p = (int) Math.floor((id - 1) / cols);
+                System.out.println(p);
+                int q = id - p * cols - 1;
+                flowLengthData[p][q] = resultSet.getDouble("length");
+            }
+
+            return flowLengthData;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return new double[0][];
     }
 }

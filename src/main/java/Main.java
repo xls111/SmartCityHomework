@@ -1,4 +1,5 @@
 import Dao.*;
+import analysis.*;
 import analysis.Interpolation.IDW;
 import analysis.Interpolation.InterpolationUtils;
 import analysis.Interpolation.Thiessen;
@@ -15,7 +16,16 @@ public class Main {
        //testIDw();
        //testThiessen();
         Grid grid = configGrid();
-
+//        testStoreFlowDirectionToDB();
+//        testReadFlowDirectionFromDB();
+//        testStoreFlowAccumulationToDB();
+//        testStoreSlopeToDB();
+//        testStoreFlowLengthToDB();
+//        testStoreAspectToDB();
+        testReadAspectFromDB();
+        testReadFlowLengthFromDB();
+        testReadSlopeFromDB();
+        testReadFlowAccumulationFromDB();
     }
 
     public static Grid configGrid() throws IOException {
@@ -126,6 +136,89 @@ public class Main {
         store.storeStationToDB(station);
     }
 
+    public static void testStoreFlowDirectionToDB() throws IOException {
+        String path = "src\\main\\resources\\dem.asc";
+        GridFileHead head = FileDao.ReadGridFileHead(path);
+        int[][] direction= FlowDirection.getFlowDirection(head);
+        StoreDataToDB storer = new StoreDataToDB();
+        storer.storeFlowDirectionToDB(direction,head);
+    }
+
+    public static void testReadFlowDirectionFromDB() throws IOException {
+        String path = "src\\main\\resources\\dem.asc";
+        GridFileHead head = FileDao.ReadGridFileHead(path);
+        ReadDataFromDB reader = new ReadDataFromDB();
+        int[][] directions = reader.readFlowDirectionFromDB(head);
+        FileDao.writeIntegerArray2DtoGridFile("src/main/resources/FlowDirection.txt",directions,head);
+        FileDao.showArray2D(directions);
+    }
+
+    public static void testStoreFlowAccumulationToDB() throws IOException {
+        String path = "src\\main\\resources\\dem.asc";
+        GridFileHead head = FileDao.ReadGridFileHead(path);
+        int[][] direction= FlowDirection.getFlowDirection(head);
+        int[][] accumulation= FlowAccumulation.GetAccumulation(direction);
+        StoreDataToDB storer = new StoreDataToDB();
+        storer.storeFlowAccumulationToDB(accumulation,head);
+    }
+
+    public static void testReadFlowAccumulationFromDB() throws IOException {
+        String path = "src\\main\\resources\\dem.asc";
+        GridFileHead head = FileDao.ReadGridFileHead(path);
+        ReadDataFromDB reader = new ReadDataFromDB();
+        int[][] accumulation = reader.readFlowAccumulationFromDB(head);
+        FileDao.writeIntegerArray2DtoGridFile("src/main/resources/FlowAccumulation.txt",accumulation,head);
+        FileDao.showArray2D(accumulation);
+    }
+
+    public static void testStoreSlopeToDB() throws IOException {
+        String path = "src\\main\\resources\\dem.asc";
+        GridFileHead head = FileDao.ReadGridFileHead(path);
+        double[][] slope = Slope.getSlope(head);
+        StoreDataToDB storer = new StoreDataToDB();
+        storer.storeSlopeToDB(slope,head);
+    }
+
+    public static void testReadSlopeFromDB() throws IOException {
+        String path = "src\\main\\resources\\dem.asc";
+        GridFileHead head = FileDao.ReadGridFileHead(path);
+        ReadDataFromDB reader = new ReadDataFromDB();
+        double[][] slope = reader.readSlopeFromDB(head);
+        FileDao.writeDoubleArray2DtoGridFile("src/main/resources/Slope.txt",slope,head);
+    }
+
+    public static void testStoreAspectToDB() throws IOException {
+        String path = "src\\main\\resources\\dem.asc";
+        GridFileHead head = FileDao.ReadGridFileHead(path);
+        double[][] aspect = Aspect.getAspect(head);
+        StoreDataToDB storer = new StoreDataToDB();
+        storer.storeAspectToDB(aspect,head);
+    }
+
+    public static void testReadAspectFromDB() throws IOException {
+        String path = "src\\main\\resources\\dem.asc";
+        GridFileHead head = FileDao.ReadGridFileHead(path);
+        ReadDataFromDB reader = new ReadDataFromDB();
+        double[][] aspect = reader.readAspectFromDB(head);
+        FileDao.writeDoubleArray2DtoGridFile("src/main/resources/Aspect.txt",aspect,head);
+    }
+
+    public static void testStoreFlowLengthToDB() throws IOException {
+        String path = "src\\main\\resources\\dem.asc";
+        GridFileHead gridFileHead = FileDao.ReadGridFileHead(path);
+        int[][] direction= FlowDirection.getFlowDirection(gridFileHead);
+        double[][] length = FlowLength.getFlowLengthDown(gridFileHead,direction);
+        StoreDataToDB storer = new StoreDataToDB();
+        storer.storeFlowLengthToDB(length,gridFileHead);
+    }
+
+    public static void testReadFlowLengthFromDB() throws IOException {
+        String path = "src\\main\\resources\\dem.asc";
+        GridFileHead head = FileDao.ReadGridFileHead(path);
+        ReadDataFromDB reader = new ReadDataFromDB();
+        double[][] length = reader.readFlowLengthFromDB(head);
+        FileDao.writeDoubleArray2DtoGridFile("src/main/resources/FlowLength.txt",length,head);
+    }
 
     public static void testSetRefRainSites() throws IOException {
         String path = "src\\main\\resources\\dem.asc";

@@ -143,7 +143,7 @@ public class StoreDataToDB {
 
     }
 
-    public void storeFlowAccumulationToDB(double[][] acc,GridFileHead head) {
+    public void storeFlowAccumulationToDB(int[][] acc,GridFileHead head) {
         try {
             if (validateTableNameExist("FlowAccumulation")) {
                 return;
@@ -153,7 +153,7 @@ public class StoreDataToDB {
                     "id int(4) not null," +
                     "x  double," +
                     "y  double," +
-                    "accumulation  double" +
+                    "accumulation  int," +
                     "PRIMARY KEY (`id`)" +
                     ");";
 
@@ -176,14 +176,188 @@ public class StoreDataToDB {
                     conn2.statement.setInt(1, k);
                     conn2.statement.setDouble(2, j * cellSize + 0.5 * cellSize + xllcorner);
                     conn2.statement.setDouble(3, (nrows - i - 1) * cellSize + 0.5 * cellSize + yllcorner);
-                    conn2.statement.setDouble(4, acc[i][j]);
+                    conn2.statement.setInt(4, acc[i][j]);
                     conn2.statement.executeUpdate();
                 }
             }
+
+            System.out.printf("流量已存入数据库");
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
+    public void storeFlowDirectionToDB(int[][] dir,GridFileHead head){
+        try {
+            if (validateTableNameExist("FlowDirection")) {
+                return;
+            }
 
+            String sql1 = "CREATE TABLE IF NOT EXISTS FlowDirection (" +
+                    "id int(4) not null," +
+                    "x double," +                       //中心点x坐标
+                    "y double," +                       //中心点y坐标
+                    "direction int," +
+                    "PRIMARY KEY (`id`)" +
+                    ");";
+            connectDB conn1 = new connectDB(sql1);
+            conn1.statement.executeUpdate();
+
+            System.out.printf("建立流向属性表成功");
+            String sql2 = "insert into FlowDirection(id,x,y,direction) values(?,?,?,?)";
+            connectDB conn2 = new connectDB(sql2);
+            int k = 0;
+
+            double cellSize = head.cellsize;
+            double xllcorner = head.xllcorner;
+            double yllcorner = head.yllcorner;
+            int nrows = head.nrows;
+            for (int i = 0; i < dir.length; i++) {
+                for (int j = 0; j < dir[i].length; j++) {
+                    k = k + 1;
+                    conn2.statement.setInt(1, k);
+                    conn2.statement.setDouble(2, j * cellSize + 0.5 * cellSize + xllcorner);
+                    conn2.statement.setDouble(3, (nrows - i - 1) * cellSize + 0.5 * cellSize + yllcorner);
+                    conn2.statement.setDouble(4, dir[i][j]);
+                    conn2.statement.executeUpdate();
+                }
+            }
+
+            System.out.printf("流向已存入数据库");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void storeSlopeToDB(double[][] slope,GridFileHead head){
+        try {
+            if (validateTableNameExist("Slope")) {
+                return;
+            }
+
+            String sql1 = "CREATE TABLE IF NOT EXISTS Slope (" +
+                    "id int(4) not null," +
+                    "x double," +                       //中心点x坐标
+                    "y double," +                       //中心点y坐标
+                    "slope double," +
+                    "PRIMARY KEY (`id`)" +
+                    ");";
+            connectDB conn1 = new connectDB(sql1);
+            conn1.statement.executeUpdate();
+
+            System.out.printf("建立坡度属性表成功");
+            String sql2 = "insert into Slope(id,x,y,slope) values(?,?,?,?)";
+            connectDB conn2 = new connectDB(sql2);
+            int k = 0;
+
+            double cellSize = head.cellsize;
+            double xllcorner = head.xllcorner;
+            double yllcorner = head.yllcorner;
+            int nrows = head.nrows;
+            for (int i = 0; i < slope.length; i++) {
+                for (int j = 0; j < slope[i].length; j++) {
+                    k = k + 1;
+                    conn2.statement.setInt(1, k);
+                    conn2.statement.setDouble(2, j * cellSize + 0.5 * cellSize + xllcorner);
+                    conn2.statement.setDouble(3, (nrows - i - 1) * cellSize + 0.5 * cellSize + yllcorner);
+                    conn2.statement.setDouble(4, slope[i][j]);
+                    conn2.statement.executeUpdate();
+                }
+            }
+
+            System.out.printf("坡度已存入数据库");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void storeAspectToDB(double[][] aspect,GridFileHead head){
+        try {
+            if (validateTableNameExist("Aspect")) {
+                return;
+            }
+
+            String sql1 = "CREATE TABLE IF NOT EXISTS Aspect (" +
+                    "id int(4) not null," +
+                    "x double," +                       //中心点x坐标
+                    "y double," +                       //中心点y坐标
+                    "aspect double," +
+                    "PRIMARY KEY (`id`)" +
+                    ");";
+            connectDB conn1 = new connectDB(sql1);
+            conn1.statement.executeUpdate();
+
+            System.out.printf("建立坡向属性表成功");
+            String sql2 = "insert into Aspect(id,x,y,aspect) values(?,?,?,?)";
+            connectDB conn2 = new connectDB(sql2);
+            int k = 0;
+
+            double cellSize = head.cellsize;
+            double xllcorner = head.xllcorner;
+            double yllcorner = head.yllcorner;
+            int nrows = head.nrows;
+            for (int i = 0; i < aspect.length; i++) {
+                for (int j = 0; j < aspect[i].length; j++) {
+                    k = k + 1;
+                    conn2.statement.setInt(1, k);
+                    conn2.statement.setDouble(2, j * cellSize + 0.5 * cellSize + xllcorner);
+                    conn2.statement.setDouble(3, (nrows - i - 1) * cellSize + 0.5 * cellSize + yllcorner);
+                    conn2.statement.setDouble(4, aspect[i][j]);
+                    conn2.statement.executeUpdate();
+                }
+            }
+
+            System.out.printf("坡向已存入数据库");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void storeFlowLengthToDB(double[][] length,GridFileHead head){
+        try {
+            if (validateTableNameExist("FlowLength")) {
+                return;
+            }
+
+            String sql1 = "CREATE TABLE IF NOT EXISTS FlowLength (" +
+                    "id int(4) not null," +
+                    "x double," +                       //中心点x坐标
+                    "y double," +                       //中心点y坐标
+                    "length double," +
+                    "PRIMARY KEY (`id`)" +
+                    ");";
+            connectDB conn1 = new connectDB(sql1);
+            conn1.statement.executeUpdate();
+
+            System.out.printf("建立流向长度属性表成功");
+            String sql2 = "insert into FlowLength(id,x,y,length) values(?,?,?,?)";
+            connectDB conn2 = new connectDB(sql2);
+            int k = 0;
+
+            double cellSize = head.cellsize;
+            double xllcorner = head.xllcorner;
+            double yllcorner = head.yllcorner;
+            int nrows = head.nrows;
+            for (int i = 0; i < length.length; i++) {
+                for (int j = 0; j < length[i].length; j++) {
+                    k = k + 1;
+                    conn2.statement.setInt(1, k);
+                    conn2.statement.setDouble(2, j * cellSize + 0.5 * cellSize + xllcorner);
+                    conn2.statement.setDouble(3, (nrows - i - 1) * cellSize + 0.5 * cellSize + yllcorner);
+                    conn2.statement.setDouble(4, length[i][j]);
+                    conn2.statement.executeUpdate();
+                }
+            }
+
+            System.out.printf("流向长度已存入数据库");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

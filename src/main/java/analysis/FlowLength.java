@@ -1,16 +1,16 @@
 package analysis;
 
 import entity.Grid;
+import entity.GridFileHead;
 import entity.RainSite;
 
 import java.util.Arrays;
 
 public class FlowLength {
-    public static double[][] getFlowLengthDown(Grid grid, int[][] dir) {
-        RainSite[][] rainSites = grid.getSites();
-        int nodataValue = grid.getNODATA_value();
-        int gridRows = rainSites.length;
-        int gridCols = rainSites[0].length;
+    public static double[][] getFlowLengthDown(GridFileHead head, int[][] dir) {
+        int nodataValue = head.NODATA_value;
+        int gridRows = head.nrows;
+        int gridCols = head.ncols;
         int dirRows = dir.length;
         int dirCols = dir[0].length;
 
@@ -33,9 +33,9 @@ public class FlowLength {
                 int col = j;
                 while (dir[row][col] > 0) {
                     if (dir[row][col] == 1 || dir[row][col] == 4 || dir[row][col] == 16 || dir[row][col] == 64)
-                        flowLength[i][j] += grid.getCellsize();
+                        flowLength[i][j] += head.cellsize;
                     else
-                        flowLength[i][j] += grid.getCellsize() * Math.sqrt(2);
+                        flowLength[i][j] += head.cellsize * Math.sqrt(2);
 
                     int[] tempX = {row, row + 1, row + 1, row + 1, row, row - 1, row - 1, row - 1};
                     int[] tempY = {col + 1, col + 1, col, col - 1, col - 1, col - 1, col, col + 1};

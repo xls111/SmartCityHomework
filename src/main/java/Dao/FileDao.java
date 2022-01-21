@@ -149,10 +149,45 @@ public class FileDao {
 
     }
 
+    public static void writeIntegerArray2DtoGridFile(
+            String filePath,
+            int[][] arrInt2D,
+            GridFileHead gridFileHead
+    ) {
+        try {
+            File hFileCreate = new File(filePath);
+            hFileCreate.createNewFile();
+            RandomAccessFile hFileWrite = new RandomAccessFile(filePath, "rw");
+
+            //写文件头
+            String strHead = "ncols    " + gridFileHead.ncols + "\r\n" +
+                    "nrows    " + gridFileHead.nrows + "\r\n" +
+                    "xllcorner    " + gridFileHead.xllcorner + "\r\n" +
+                    "yllcorner    " + gridFileHead.yllcorner + "\r\n" +
+                    "cellsize    " + gridFileHead.cellsize + "\r\n" +
+                    "NODATA_value    " + gridFileHead.NODATA_value + "\r\n";
+            hFileWrite.write((strHead).getBytes());
+
+            //写数据内容
+            for (int i = 0; i < arrInt2D.length; i++) {
+                String line = "";
+                for (int j = 0; j < arrInt2D[i].length; j++) {
+                    line += arrInt2D[i][j] + " ";
+                }
+                line += "\r\n";
+                hFileWrite.write((line).getBytes());
+            }
+            hFileWrite.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
     public static void showArray2D(double[][] array){
         for(int i = 0;i< array.length;i++)
             for(int j=0;j<array[0].length;j++){
-                System.out.println(array[i][j] + " ");
+                System.out.print(array[i][j] + " ");
             }
         System.out.println();
     }
@@ -160,7 +195,7 @@ public class FileDao {
     public static void showArray2D(int[][] array){
         for(int i = 0;i< array.length;i++)
             for(int j=0;j<array[0].length;j++){
-                System.out.println(array[i][j] + " ");
+                System.out.print(array[i][j] + " ");
             }
         System.out.println();
     }

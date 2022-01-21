@@ -6,9 +6,9 @@ import entity.GridFileHead;
 import java.io.IOException;
 
 public class FlowDirection {
-    public static double[][] getFlowDirection(double Dem[][], int nrows, int nclos, double Nodata) throws IOException{
+    public static int[][] getFlowDirection(double Dem[][], int nrows, int nclos, int Nodata) throws IOException{
 
-        double[][] Dir=new double[nrows][nclos];
+        int[][] Dir=new int[nrows][nclos];
 
         //定义流向列表，该列表按照一个以目标位置为中心的3*3矩阵，从左上角开始按顺序定义流向
         int[] list={32,64,128,16,0,1,8,4,2};
@@ -66,8 +66,8 @@ public class FlowDirection {
         return Dir;
     }
 
-    public static double[][] getFlowDirection(double Dem[][], int nrows, int nclos, double Nodata,int[][] riverMask){
-        double[][] Dir=new double[nrows][nclos];
+    public static int[][] getFlowDirection(double Dem[][], int nrows, int nclos, int Nodata,int[][] riverMask){
+        int[][] Dir=new int[nrows][nclos];
 
         //定义流向列表，该列表按照一个以目标位置为中心的3*3矩阵，从左上角开始按顺序定义流向
         int[] list={32,64,128,16,0,1,8,4,2};
@@ -129,7 +129,7 @@ public class FlowDirection {
         return Dir;
     }
 
-    public static double[][] getFlowDirection(GridFileHead head) throws IOException {
+    public static int[][] getFlowDirection(GridFileHead head) throws IOException {
         int rows = head.nrows;
         int cols = head.ncols;
         int noData = head.NODATA_value;
@@ -139,7 +139,7 @@ public class FlowDirection {
         return getFlowDirection(dem,rows,cols,noData);
     }
 
-    public static double[][] getFlowDirection(GridFileHead head, int[][] riverMask){
+    public static int[][] getFlowDirection(GridFileHead head, int[][] riverMask){
         int rows = head.nrows;
         int cols = head.ncols;
         int noData = head.NODATA_value;
