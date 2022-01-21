@@ -58,7 +58,7 @@ public class ThreadOperation implements Runnable{
 		thr[1] = new ThreadOperation("FlowDirection");
 		thr[2] = new ThreadOperation("HoleFilling");
 		thr[3] = new ThreadOperation("Slope");
-		for (int i = 0; i < 3; i++) {
+		for (int i = 0; i <= 3; i++) {
 			thr[i].run();
 			re[i] = thr[i].result;
 		}
