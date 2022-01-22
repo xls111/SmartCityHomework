@@ -1,5 +1,7 @@
 package analysis;
 
+import Entity.GridFileHead;
+
 import java.io.IOException;
 
 public class UpStreamUnitsCount {
@@ -15,10 +17,10 @@ public class UpStreamUnitsCount {
     }
 
     //计算上游单元
-    public static int[][] getUpValue(int[][] dir) throws IOException {
+    public static int[][] getUpValue(GridFileHead head,int[][] dir) throws IOException {
 
-        int nrows=236;
-        int ncols=218;
+        int nrows = head.nrows;
+        int ncols = head.ncols;
         int[][] number;
         number = new int[nrows][ncols];
         for (int i = 0; i < nrows; i++) {

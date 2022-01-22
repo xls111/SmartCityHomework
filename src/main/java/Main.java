@@ -162,7 +162,7 @@ public class Main {
         String path = "src\\main\\resources\\dem.asc";
         GridFileHead head = FileDao.ReadGridFileHead(path);
         int[][] direction= FlowDirection.getFlowDirection(head);
-        int[][] accumulation= FlowAccumulation.GetAccumulation(direction);
+        int[][] accumulation= FlowAccumulation.GetAccumulation(head,direction);
         StoreDataToDB storer = new StoreDataToDB();
         storer.storeFlowAccumulationToDB(accumulation,head);
     }
