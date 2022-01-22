@@ -6,8 +6,8 @@ import java.io.IOException;
 
 public class StreamExtraction {
     public static int[][] getRiver(int[][] acc, int thresold) throws IOException {
-        int nrows=236;
-        int ncols=218;
+        int nrows=acc.length;
+        int ncols=acc[0].length;
         int river[][] = new int[nrows][ncols];
         int i=0;
         int j=0;

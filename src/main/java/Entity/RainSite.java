@@ -1,5 +1,11 @@
-package entity;
+package Entity;
 
+/**
+ * 雨的网站
+ *
+ * @author PC
+ * @date 2022/01/22
+ */
 public class RainSite {
 
     private double x;
@@ -7,6 +13,9 @@ public class RainSite {
     private double rain;
     private double elevation;
 
+    /**
+     * 雨的网站
+     */
     public RainSite() {
         this.x = 0;
         this.y = 0;
@@ -14,6 +23,14 @@ public class RainSite {
         this.elevation = 0;
     }
 
+    /**
+     * 雨的网站
+     *
+     * @param x         x
+     * @param y         y
+     * @param rain      雨
+     * @param elevation 海拔高度
+     */
     public RainSite(double x, double y, double rain,double elevation) {
         this.x = x;
         this.y = y;

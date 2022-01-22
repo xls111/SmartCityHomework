@@ -2,14 +2,10 @@ package windows;
 
 import Dao.FileDao;
 import Database.ReadDataFromDB;
-import entity.GridFileHead;
+import Entity.GridFileHead;
 
-import javax.swing.*;
 import java.awt.*;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Scanner;
 
 //二维数组图像展示窗口
 public class picture extends Canvas {

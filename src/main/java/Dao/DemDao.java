@@ -1,6 +1,6 @@
 package Dao;
 
-import entity.Dem;
+import Entity.Dem;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -20,7 +20,7 @@ public class DemDao {
         }
     }
 
-    public void readDemToList(Dem dem) {
+    public void writeDemToList(Dem dem) {
         try {
             String filePath = dem.getConfigPath();
             DataInputStream in = new DataInputStream(new FileInputStream(filePath));

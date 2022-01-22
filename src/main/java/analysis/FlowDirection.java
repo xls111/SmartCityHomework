@@ -1,7 +1,7 @@
 package analysis;
 
 import Database.ReadDataFromDB;
-import entity.GridFileHead;
+import Entity.GridFileHead;
 
 import java.io.IOException;
 

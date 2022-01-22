@@ -3,7 +3,7 @@ import analysis.*;
 import analysis.Interpolation.IDW;
 import analysis.Interpolation.InterpolationUtils;
 import analysis.Interpolation.Thiessen;
-import entity.*;
+import Entity.*;
 import Database.ReadDataFromDB;
 import Database.StoreDataToDB;
 
@@ -15,19 +15,30 @@ public class Main {
     public static void main(String[] args) throws IOException {
        //testIDw();
        //testThiessen();
-        testStoreDataToDB();
-        Grid grid = configGrid();
-        testStoreFlowDirectionToDB();
-        testReadFlowDirectionFromDB();
-        testStoreFlowAccumulationToDB();
-        testStoreSlopeToDB();
-        testStoreFlowLengthToDB();
-        testStoreAspectToDB();
-        testReadAspectFromDB();
-        testReadFlowLengthFromDB();
-        testReadSlopeFromDB();
-        testReadFlowAccumulationFromDB();
-        testStoreViewshed();
+//        Grid grid = configGrid();
+//        testStoreFlowDirectionToDB();
+//        testReadFlowDirectionFromDB();
+//        testStoreFlowAccumulationToDB();
+//        testStoreSlopeToDB();
+//        testStoreFlowLengthToDB();
+//        testStoreAspectToDB();
+//        testReadAspectFromDB();
+//        testReadFlowLengthFromDB();
+//        testReadSlopeFromDB();
+//        testReadFlowAccumulationFromDB();
+        String sentence = "├─src\n" +
+                "│  └─main\n" +
+                "│      ├─java\n" +
+                "│      │  ├─analysis\t    -- 水文分析功能模块\n" +
+                "│      │  │  ├─Interpolation   -- 雨量插值计算\t\n" +
+                "│      │  │  └─MultiThread     -- 多线程计算\n" +
+                "│      │  ├─Dao       -- 数据获取与处理层\n" +
+                "│      │  ├─Database  -- 数据库操作层\n" +
+                "│      │  ├─entity    -- 数据层\n" +
+                "│      │  └─windows   -- 可视化窗口层\n" +
+                "│      ├─resources    -- 数据资源文件\n" +
+                "│      └─results      -- 结果文件\n";
+        System.out.println(sentence);
     }
 
     public static Grid configGrid() throws IOException {
@@ -123,7 +134,7 @@ public class Main {
         DemDao demDao = new DemDao();
         String path = "src\\main\\resources\\dem.asc";
         demDao.init(dem,path);
-        demDao.readDemToList(dem);
+        demDao.writeDemToList(dem);
         //dem.showDem();
 
         Rain rain = new Rain();
@@ -224,13 +235,6 @@ public class Main {
         ReadDataFromDB reader = new ReadDataFromDB();
         double[][] length = reader.readFlowLengthFromDB(head);
         FileDao.writeDoubleArray2DtoGridFile("src/main/results/FlowLength.asc",length,head);
-    }
-
-    public static void testStoreViewshed() throws IOException {
-        String path = "src\\main\\resources\\dem.asc";
-        GridFileHead gridFileHead = FileDao.ReadGridFileHead(path);
-        double[][] view = Viewshed.View(118,50,gridFileHead);
-        FileDao.writeDoubleArray2DtoGridFile("src/main/results/viewshed.asc",view,gridFileHead);
     }
 
     public static void testSetRefRainSites() throws IOException {

@@ -1,9 +1,9 @@
 package Database;
 
-import entity.Dem;
-import entity.GridFileHead;
-import entity.Rain;
-import entity.Station;
+import Entity.Dem;
+import Entity.GridFileHead;
+import Entity.Rain;
+import Entity.Station;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
