@@ -9,7 +9,17 @@ import java.util.ArrayList;
 //import java.util.HashSet;
 
 public class Viewshed {
-    public static double[][] View(double pointCoordinateX, double pointCoordinateY, double Dem[][], int nrows, int ncols, double Nodata) throws IOException {
+    /**
+     * @param pointRow 观察点行号
+     * @param pointCols 观察点列好
+     * @param Dem Dem数组
+     * @param nrows 行数
+     * @param ncols 列数
+     * @param Nodata 无数据值
+     * @return 可视域表
+     * @throws IOException
+     */
+    public static double[][] View(double pointRow, double pointCols, double Dem[][], int nrows, int ncols, double Nodata) throws IOException {
         //可视域分析
         double[][] view = new double[nrows][ncols];
 
@@ -18,11 +28,13 @@ public class Viewshed {
             double X;
             double Y;
 
+            //双参数构造函数
             public Point(double x, double y) {
                 X = x;
                 Y = y;
             }
 
+            //无参构造函数
             public Point() {
                 X = 0;
                 Y = 0;
@@ -30,10 +42,10 @@ public class Viewshed {
         }
 
         //以每个像元中心作为起点
-        Point startPoint = new Point(pointCoordinateX + 0.5, pointCoordinateY + 0.5);
+        Point startPoint = new Point(pointRow + 0.5, pointCols + 0.5);
 
         //判断是否为有效点
-        if (Dem[(int) pointCoordinateX][(int) pointCoordinateY] == Nodata)
+        if (Dem[(int) pointRow][(int) pointCols] == Nodata)
             System.out.println("The point is not exist");
         else {
 
@@ -51,6 +63,7 @@ public class Viewshed {
                         // 以目标像元中心作为终点
                         Point endPoint = new Point(i + 0.5, j + 0.5);
 
+                        //定义向下X轴，向右Y轴
                         double dx = endPoint.X - startPoint.X;
                         double dy = endPoint.Y - startPoint.Y;
 
@@ -132,7 +145,7 @@ public class Viewshed {
                         double max = Dem[i][j];
                         //判断所经像元高程值是否大于目标点
                         for (int kk = 0; kk < gridList.size(); kk++) {
-                            if ((gridList.get(kk).X - 1 == pointCoordinateX && gridList.get(kk).Y - 1 == pointCoordinateY) || (gridList.get(kk).X - 1 == i && gridList.get(kk).Y - 1 == j))
+                            if ((gridList.get(kk).X - 1 == pointRow&& gridList.get(kk).Y - 1 == pointCols) || (gridList.get(kk).X - 1 == i && gridList.get(kk).Y - 1 == j))
                                 continue;
                             else if (Dem[(int) gridList.get(kk).X - 1][(int) gridList.get(kk).Y - 1] > max)
                                 max = Dem[(int) gridList.get(kk).X - 1][(int) gridList.get(kk).Y - 1];
@@ -142,7 +155,7 @@ public class Viewshed {
                         else {
                             view[i][j] = 1;
                         }
-                        view[(int) pointCoordinateX][(int) pointCoordinateY] = 2;
+                        view[(int) pointRow][(int) pointCols] = 2;
                     }
                 }
         }
@@ -150,13 +163,20 @@ public class Viewshed {
     }
 
 
-    public static double[][] View(double pointCoordinateX, double pointCoordinateY, GridFileHead head) throws IOException {
+    /**
+     * @param pointRow 观察点行号
+     * @param pointCols 观察点列号
+     * @param head 头文件
+     * @return
+     * @throws IOException
+     */
+    public static double[][] View(double pointRow, double pointCols, GridFileHead head) throws IOException {
         int rows = head.nrows;
         int cols = head.ncols;
         int noData = head.NODATA_value;
         ReadDataFromDB reader = new ReadDataFromDB();
         double[][] dem = reader.readDemFromDB(head);
 
-        return View(pointCoordinateX,pointCoordinateY,dem,rows,cols,noData);
+        return View(pointRow,pointCols,dem,rows,cols,noData);
     }
 }
