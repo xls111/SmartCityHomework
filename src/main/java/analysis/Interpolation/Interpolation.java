@@ -1,7 +1,7 @@
 package analysis.Interpolation;
 
-import entity.Grid;
-import entity.RainSite;
+import Entity.Grid;
+import Entity.RainSite;
 
 public interface Interpolation {
     public double getCellRainByInterpolation(RainSite s);

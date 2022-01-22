@@ -1,7 +1,6 @@
 package Dao;
 
-import entity.Dem;
-import entity.Rain;
+import Entity.Rain;
 
 import java.io.*;
 import java.util.ArrayList;

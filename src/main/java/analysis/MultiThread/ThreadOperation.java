@@ -5,7 +5,7 @@ import analysis.Aspect;
 import analysis.FlowDirection;
 import analysis.HoleFilling;
 import analysis.Slope;
-import entity.GridFileHead;
+import Entity.GridFileHead;
 
 import java.io.IOException;
 

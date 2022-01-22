@@ -1,8 +1,7 @@
 package Database;
 
-import entity.Grid;
-import entity.GridFileHead;
-import entity.RainSite;
+import Entity.GridFileHead;
+import Entity.RainSite;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

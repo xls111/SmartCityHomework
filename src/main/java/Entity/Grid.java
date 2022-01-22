@@ -1,4 +1,4 @@
-package entity;
+package Entity;
 
 /**
  * 网格
@@ -48,27 +48,6 @@ public class Grid {
         this.cellsize = cellsize;
         this.NODATA_value = NODATA_value;
         this.sites = sites;
-    }
-
-    /**
-     * 返回网格的地理坐标
-     *
-     * @param x 横坐标索引
-     * @param y 纵坐标索引
-     * @return {@link double[]} 二维double数组，第一项为横坐标，第二项为纵坐标
-     */
-    public double[] getPosition(int x, int y) {
-        double[] positions = new double[2];
-        positions[0] = (0.5 + x) * this.cellsize + this.xllcorner;
-        positions[1] = (0.5 + y) * this.cellsize + this.yllcorner;
-        return positions;
-    }
-
-    public int[] parsePosition(double px, double py) {
-        int[] index = new int[2];
-        index[0] = (int) Math.floor((px - this.xllcorner) / this.cellsize);
-        index[1] = (int) Math.floor((py - this.yllcorner) / this.cellsize);
-        return index;
     }
 
     public int getRows() {

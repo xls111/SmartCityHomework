@@ -1,10 +1,8 @@
 package analysis;
 
 import Database.ReadDataFromDB;
-import entity.GridFileHead;
+import Entity.GridFileHead;
 
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 
 

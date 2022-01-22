@@ -1,7 +1,7 @@
 package analysis;
 
 import Database.ReadDataFromDB;
-import entity.GridFileHead;
+import Entity.GridFileHead;
 
 public class Aspect {
     public static double[][] getAspect(double Dem[][], int nrows, int ncols, double Nodata, double cellsize){

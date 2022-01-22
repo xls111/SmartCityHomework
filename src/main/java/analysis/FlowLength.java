@@ -1,8 +1,6 @@
 package analysis;
 
-import entity.Grid;
-import entity.GridFileHead;
-import entity.RainSite;
+import Entity.GridFileHead;
 
 import java.util.Arrays;
 

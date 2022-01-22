@@ -1,9 +1,7 @@
 package analysis;
 
 import Database.ReadDataFromDB;
-import entity.GridFileHead;
-
-import java.io.IOException;
+import Entity.GridFileHead;
 
 
 public class HoleFilling {
