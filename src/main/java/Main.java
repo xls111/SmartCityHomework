@@ -139,12 +139,12 @@ public class Main {
 
         Rain rain = new Rain();
         RainDao rainDao = new RainDao();
-        rainDao.readRainToList(rain);
+        rainDao.writeRainToList(rain);
         //dem.showRain();
 
         Station station = new Station();
         StationDao stationDao = new StationDao();
-        stationDao.readStationToList(station);
+        stationDao.writeStationToList(station);
         //dem.showStation();
 
         StoreDataToDB store = new StoreDataToDB();

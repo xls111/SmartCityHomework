@@ -8,7 +8,7 @@ import java.util.List;
 
 public class RainDao {
 
-    public void readRainToList(Rain rain) {
+    public void writeRainToList(Rain rain) {
         int k = 1;//计数
         File statFile = new File("src/main/resources/20050623.txt");
         FileReader fis = null;
