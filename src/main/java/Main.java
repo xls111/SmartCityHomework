@@ -26,7 +26,9 @@ public class Main {
 //        testReadFlowLengthFromDB();
 //        testReadSlopeFromDB();
 //        testReadFlowAccumulationFromDB();
-        testIDw();
+  //      testIDw();
+        //testThiessen();
+        testReadFlowLengthFromDB();
     }
 
     public static Grid configGrid() throws IOException {
