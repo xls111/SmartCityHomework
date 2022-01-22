@@ -229,7 +229,7 @@ public class Main {
     public static void testStoreViewshed() throws IOException {
         String path = "src\\main\\resources\\dem.asc";
         GridFileHead gridFileHead = FileDao.ReadGridFileHead(path);
-        double[][] view = Viewshed.getView(118,50,gridFileHead);
+        double[][] view = Viewshed.View(118,50,gridFileHead);
         FileDao.writeDoubleArray2DtoGridFile("src/main/results/viewshed.asc",view,gridFileHead);
     }
 
