@@ -8,7 +8,7 @@ import java.util.List;
 
 public class StationDao {
 
-    public void readStationToList(Station station) {
+    public void writeStationToList(Station station) {
         int statnum = 0;
         int k = 1;//计数
         File statFile = new File("src/main/resources/StationProperty.txt");
