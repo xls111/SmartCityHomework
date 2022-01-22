@@ -1,17 +1,21 @@
 package Entity;
 
+/**
+ * 网格文件头
+ */
 public class GridFileHead {
-    public int ncols;
 
-    public int nrows;
+    public int ncols;   // 列数
 
-    public double xllcorner;
+    public int nrows;   // 行数
 
-    public double yllcorner;
+    public double xllcorner;    // 左下角横坐标
 
-    public double cellsize;
+    public double yllcorner;    // 左下角纵坐标
 
-    public int NODATA_value;
+    public double cellsize;     // 网格大小
+
+    public int NODATA_value;    // 无数据值
 
 
 }

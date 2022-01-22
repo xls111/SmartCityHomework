@@ -9,6 +9,9 @@ import Entity.GridFileHead;
 
 import java.io.IOException;
 
+/**
+ * 线程操作
+ */
 public class ThreadOperation implements Runnable{
 
     private String method;
@@ -64,19 +67,6 @@ public class ThreadOperation implements Runnable{
         selectMethod(head,this.method);
     }
 
-//	public double[][][] MultiThread() throws IOException {
-//		double[][][] re = new double[4][][];
-//		ThreadOperation[] thr = null;
-//		thr[0] = new ThreadOperation("Aspect");
-//		thr[1] = new ThreadOperation("FlowDirection");
-//		thr[2] = new ThreadOperation("HoleFilling");
-//		thr[3] = new ThreadOperation("Slope");
-//		for (int i = 0; i < 3; i++) {
-//			thr[i].run();
-//			re[i] = thr[i].result;
-//		}
-//		return re;
-//	}
 
     public String getMethod() {
         return method;

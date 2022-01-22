@@ -4,10 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Dem {
+
+    // Dem文件路径
     private String configPath;
 
+    // GridFileHead类型 文件头
     private GridFileHead head;
 
+    // 存放dem的ArrayList列表
     private List<List<Double>> dem = new ArrayList<List<Double>>();
 
     public String getConfigPath() {

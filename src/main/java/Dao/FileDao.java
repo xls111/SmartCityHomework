@@ -4,12 +4,15 @@ import Entity.GridFileHead;
 
 import java.io.*;
 
+/**
+ * 文件处理类
+ */
 public class FileDao {
     /**
-     * 读取asc文件的数字数据
+     * 从栅格asc文件中读取格网的二维数组数据
      *
      * @param filePath 文件路径
-     * @return {@link double[][] 网格数据}
+     * @return {@link double[][]}  格网数据
      */
     public double[][] readGridFileToDoubleArray2D(String filePath) {
 
@@ -149,6 +152,13 @@ public class FileDao {
 
     }
 
+    /**
+     * 将整形数组写入栅格格网文件
+     *
+     * @param filePath     文件路径
+     * @param arrInt2D     二维整形数组
+     * @param gridFileHead 网格文件头
+     */
     public static void writeIntegerArray2DtoGridFile(
             String filePath,
             int[][] arrInt2D,
@@ -184,6 +194,11 @@ public class FileDao {
 
     }
 
+    /**
+     * 显示double类型数组
+     *
+     * @param array double二维数组
+     */
     public static void showArray2D(double[][] array){
         for(int i = 0;i< array.length;i++)
             for(int j=0;j<array[0].length;j++){
@@ -192,6 +207,11 @@ public class FileDao {
         System.out.println();
     }
 
+    /**
+     * 显示int类型数组
+     *
+     * @param array int二维数组
+     */
     public static void showArray2D(int[][] array){
         for(int i = 0;i< array.length;i++)
             for(int j=0;j<array[0].length;j++){

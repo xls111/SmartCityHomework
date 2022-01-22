@@ -227,6 +227,7 @@ public class Main {
         ReadDataFromDB reader = new ReadDataFromDB();
         double[][] slope = reader.readSlopeFromDB(head);
         FileDao.writeDoubleArray2DtoGridFile("src/main/results/Slope.asc",slope,head);
+        FileDao.showArray2D(slope);
     }
 
     public static void testStoreAspectToDB() throws IOException {
@@ -243,6 +244,7 @@ public class Main {
         ReadDataFromDB reader = new ReadDataFromDB();
         double[][] aspect = reader.readAspectFromDB(head);
         FileDao.writeDoubleArray2DtoGridFile("src/main/results/Aspect.asc",aspect,head);
+        FileDao.showArray2D(aspect);
     }
 
     public static void testStoreFlowLengthToDB() throws IOException {
@@ -260,6 +262,7 @@ public class Main {
         ReadDataFromDB reader = new ReadDataFromDB();
         double[][] length = reader.readFlowLengthFromDB(head);
         FileDao.writeDoubleArray2DtoGridFile("src/main/results/FlowLength.asc",length,head);
+        FileDao.showArray2D(length);
     }
     public static void testStoreHoleFillingToDB() throws IOException {
         String path = "src\\main\\resources\\dem.asc";
@@ -275,6 +278,7 @@ public class Main {
         ReadDataFromDB reader = new ReadDataFromDB();
         double[][] holefilling = reader.readHoleFillingFromDB(head);
         FileDao.writeDoubleArray2DtoGridFile("src/main/results/HoleFilling.asc",holefilling,head);
+        FileDao.showArray2D(holefilling);
     }
 
 
@@ -294,6 +298,7 @@ public class Main {
         ReadDataFromDB reader = new ReadDataFromDB();
         int[][] river = reader.readStreamExtrcationFromDB(head);
         FileDao.writeIntegerArray2DtoGridFile("src/main/results/StreamExtraction.asc",river,head);
+        FileDao.showArray2D(river);
     }
 
     public static void testStoreUpStreamUnitsCountsToDB() throws IOException {
@@ -311,6 +316,7 @@ public class Main {
         ReadDataFromDB reader = new ReadDataFromDB();
         int[][] counts = reader.readUpStreamUnitsCountFromDB(head);
         FileDao.writeIntegerArray2DtoGridFile("src/main/results/UpStreamUnitsCounts.asc",counts,head);
+        FileDao.showArray2D(counts);
     }
 
     public static void testViewshed() throws IOException {
@@ -318,7 +324,7 @@ public class Main {
         GridFileHead head = FileDao.ReadGridFileHead(path);
         double[][] views = Viewshed.View(118, 50, head);
         FileDao.writeDoubleArray2DtoGridFile("src/main/results/Viewshed.asc",views,head);
-
+        FileDao.showArray2D(views);
     }
 
     public static void testStreamExtraction2() throws IOException {
@@ -328,6 +334,7 @@ public class Main {
         int[][] accumulation = FlowAccumulation.GetAccumulation(head, flowDirection);
         int[][] river = StreamExtraction.getRiver(accumulation, 10);
         FileDao.writeIntegerArray2DtoGridFile("src/main/results/StreamExtraction2.asc",river,head);
+        FileDao.showArray2D(river);
     }
 
     public static void testSetRefRainSites() throws IOException {

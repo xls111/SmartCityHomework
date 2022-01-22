@@ -7,7 +7,9 @@ import Entity.GridFileHead;
 import java.awt.*;
 import java.io.IOException;
 
-//二维数组图像展示窗口
+/**
+ * 二维数组图像展示窗口
+ */
 public class picture extends Canvas {
 
     public void paint(Graphics g) {

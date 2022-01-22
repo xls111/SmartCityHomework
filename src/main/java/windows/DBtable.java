@@ -13,7 +13,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-//dem数据表的管理界面
+
+/**
+ * dem数据表的管理界面
+ */
 public class DBtable extends JFrame {
     private JTable table;
     private JPanel panel;

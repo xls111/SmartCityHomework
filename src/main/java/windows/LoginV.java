@@ -8,7 +8,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 
-//登录窗口，初始账号密码为root、admin123
+/**
+ * 登录窗口
+ * 初始账号密码为root、admin123
+ */
 public class LoginV extends JFrame {
 
     private Container container = getContentPane();

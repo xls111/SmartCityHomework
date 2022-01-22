@@ -2,6 +2,9 @@ package analysis.MultiThread;
 
 import java.io.IOException;
 
+/**
+ * 多线程测试
+ */
 public class ThreadTest {
     public static void main(String[] args) throws IOException {
         Thread thread1 = new Thread(new ThreadOperation("Aspect"));

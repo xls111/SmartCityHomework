@@ -6,8 +6,16 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 雨量数据处理类
+ */
 public class RainDao {
 
+    /**
+     * 将雨量数据写入列表
+     *
+     * @param rain 雨
+     */
     public void writeRainToList(Rain rain) {
         int k = 1;//计数
         File statFile = new File("src/main/resources/20050623.txt");
@@ -49,7 +57,11 @@ public class RainDao {
         }
     }
 
-    //TODO:添加字段头信息
+    /**
+     * 显示测站的雨量数据
+     *
+     * @param rain 雨量
+     */
     public void showRain(Rain rain) {
         for (List<?> objects : rain.getRain()) {
             for (int q = 0; q < objects.size(); q++) {

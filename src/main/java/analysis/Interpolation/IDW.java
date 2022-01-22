@@ -5,6 +5,9 @@ import Entity.RainSite;
 
 import static analysis.Interpolation.InterpolationUtils.getDistance;
 
+/**
+ * 反距离权重插值
+ */
 public class IDW implements Interpolation {
 
     private final RainSite[] refSites;
@@ -13,6 +16,12 @@ public class IDW implements Interpolation {
         this.refSites = sites;
     }
 
+    /**
+     * 按照IDW插值原理，根据参考站点数据，求出单个格网的雨量插值数据
+     *
+     * @param s 站点
+     * @return double
+     */
     @Override
     public double getCellRainByInterpolation(RainSite s) {
         double sum = 0;
@@ -38,6 +47,11 @@ public class IDW implements Interpolation {
         return rain;
     }
 
+    /**
+     * 按照泰森多边形插值原理，根据参考站点数据，求出所有格网的雨量插值数据
+     *
+     * @param grid 网格
+     */
     @Override
     public void getAllRainByInterpolation(Grid grid){
         int rows = grid.getRows();

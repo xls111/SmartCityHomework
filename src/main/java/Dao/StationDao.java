@@ -6,8 +6,16 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 站点数据处理类
+ */
 public class StationDao {
 
+    /**
+     * 将测站点数据写入列表
+     *
+     * @param station 测站点类
+     */
     public void writeStationToList(Station station) {
         int statnum = 0;
         int k = 1;//计数
@@ -50,6 +58,11 @@ public class StationDao {
         }
     }
 
+    /**
+     * 显示测站点数
+     *
+     * @param station 测站
+     */
     public void showStation(Station station) {
         for (List<?> objects : station.getStation()) {
             for (int q = 0; q < objects.size(); q++) {

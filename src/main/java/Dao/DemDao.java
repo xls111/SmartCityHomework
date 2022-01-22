@@ -8,7 +8,7 @@ import java.util.List;
 
 import static Dao.FileDao.ReadGridFileHead;
 
-//TODO:将数据与数据操作分离
+
 public class DemDao {
 
     public void init(Dem dem, String path) {

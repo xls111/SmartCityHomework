@@ -5,6 +5,9 @@ import Entity.RainSite;
 
 import static analysis.Interpolation.InterpolationUtils.getDistance;
 
+/**
+ * thiessen插值
+ */
 public class Thiessen implements Interpolation {
 
     private final RainSite[] refSites;
@@ -12,6 +15,13 @@ public class Thiessen implements Interpolation {
     public Thiessen(RainSite[] sites){
         this.refSites = sites;
     }
+
+    /**
+     * 按照泰森多边形插值原理，根据参考站点数据，求出单个格网的雨量插值数据
+     *
+     * @param s 年代
+     * @return double
+     */
     @Override
     public double getCellRainByInterpolation(RainSite s) {
         double rain = 0;
@@ -30,6 +40,11 @@ public class Thiessen implements Interpolation {
         return rain;
     }
 
+    /**
+     * 按照泰森多边形插值原理，根据参考站点数据，求出所有格网的雨量插值数据
+     *
+     * @param grid 网格
+     */
     @Override
     public void getAllRainByInterpolation(Grid grid) {
         int rows = grid.getRows();

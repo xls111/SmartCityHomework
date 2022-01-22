@@ -11,7 +11,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 
-//数据表选择窗口，目前只实现了选择dem表后的操作
+/**
+ * 数据表选择窗口
+ * 目前只实现了选择dem表后的操作
+ */
 public class Select {
     public Select(){
         // 创建 JFrame 实例

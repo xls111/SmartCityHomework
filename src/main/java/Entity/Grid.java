@@ -2,19 +2,16 @@ package Entity;
 
 /**
  * 网格
- *
- * @author PC
- * @date 2021/12/29
  */
 //测试
 public class Grid {
     private int rows;                    //行数
     private int cols;                    //列数
-    private double xllcorner;                   //左下角横坐标
-    private double yllcorner;                   //左下角纵坐标
+    private double xllcorner;            //左下角横坐标
+    private double yllcorner;            //左下角纵坐标
     private double cellsize;             //网格大小
     private int NODATA_value;            //无数据时的保留值
-    private RainSite[][] sites;              //流量网格
+    private RainSite[][] sites;          //流量网格
 
     /**
      * domain.Grid 无参构造函数，初始化网格设置

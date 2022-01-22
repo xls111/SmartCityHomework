@@ -1,10 +1,7 @@
 package Entity;
 
 /**
- * 雨的网站
- *
- * @author PC
- * @date 2022/01/22
+ * 雨量站
  */
 public class RainSite {
 
@@ -14,7 +11,7 @@ public class RainSite {
     private double elevation;
 
     /**
-     * 雨的网站
+     * 雨量站
      */
     public RainSite() {
         this.x = 0;
