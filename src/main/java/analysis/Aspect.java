@@ -3,7 +3,16 @@ package analysis;
 import Database.ReadDataFromDB;
 import Entity.GridFileHead;
 
+
 public class Aspect {
+    /**
+     * @param Dem 高程
+     * @param nrows 行数
+     * @param ncols 列数
+     * @param Nodata 无数据值
+     * @param cellsize  像元大小
+     * @return 流向表
+     */
     public static double[][] getAspect(double Dem[][], int nrows, int ncols, double Nodata, double cellsize){
         double[][] aspect=new double[nrows][ncols];
 
@@ -36,6 +45,10 @@ public class Aspect {
         return aspect;
     }
 
+    /**
+     * @param head 头文件
+     * @return
+     */
     public static double[][] getAspect(GridFileHead head){
         int rows = head.nrows;
         int cols = head.ncols;

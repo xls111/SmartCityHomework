@@ -5,7 +5,16 @@ import Entity.GridFileHead;
 
 import java.io.IOException;
 
+
 public class FlowDirection {
+    /**
+     * @param Dem Dem数组
+     * @param nrows 行数
+     * @param nclos 列数
+     * @param Nodata 无数据值
+     * @return 流向表
+     * @throws IOException
+     */
     public static int[][] getFlowDirection(double Dem[][], int nrows, int nclos, int Nodata) throws IOException{
 
         int[][] Dir=new int[nrows][nclos];
@@ -66,6 +75,14 @@ public class FlowDirection {
         return Dir;
     }
 
+    /**
+     * @param Dem Dem数据
+     * @param nrows 行数
+     * @param nclos 列数
+     * @param Nodata 无数据值
+     * @param riverMask 河流掩膜
+     * @return 流向表
+     */
     public static int[][] getFlowDirection(double Dem[][], int nrows, int nclos, int Nodata,int[][] riverMask){
         int[][] Dir=new int[nrows][nclos];
 
@@ -129,6 +146,11 @@ public class FlowDirection {
         return Dir;
     }
 
+    /**
+     * @param head 头文件
+     * @return
+     * @throws IOException
+     */
     public static int[][] getFlowDirection(GridFileHead head) throws IOException {
         int rows = head.nrows;
         int cols = head.ncols;
@@ -139,6 +161,12 @@ public class FlowDirection {
         return getFlowDirection(dem,rows,cols,noData);
     }
 
+
+    /**
+     * @param head 头文件
+     * @param riverMask 河流掩膜
+     * @return
+     */
     public static int[][] getFlowDirection(GridFileHead head, int[][] riverMask){
         int rows = head.nrows;
         int cols = head.ncols;

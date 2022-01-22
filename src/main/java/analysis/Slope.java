@@ -7,6 +7,15 @@ import java.io.IOException;
 
 
 public class Slope {
+    /**
+     * @param Dem Dem数组
+     * @param nrows 行数
+     * @param cols 列数
+     * @param Nodata 无数据值
+     * @param cellsize 像元大小
+     * @return 坡度表
+     * @throws IOException
+     */
     public static double[][] getSlope(double Dem[][], int nrows, int cols, double Nodata, double cellsize) throws IOException{
 
         //定义坡度矩阵
@@ -32,6 +41,11 @@ public class Slope {
         return slope;
     }
 
+    /**
+     * @param head 头文件
+     * @return
+     * @throws IOException
+     */
     public static double[][] getSlope(GridFileHead head) throws IOException {
         int rows = head.nrows;
         int cols = head.ncols;

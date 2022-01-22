@@ -5,6 +5,11 @@ import Entity.GridFileHead;
 import java.util.Arrays;
 
 public class FlowLength {
+    /**
+     * @param head 头文件
+     * @param dir 流向数组
+     * @return 河流长度
+     */
     public static double[][] getFlowLengthDown(GridFileHead head, int[][] dir) {
         int nodataValue = head.NODATA_value;
         int gridRows = head.nrows;

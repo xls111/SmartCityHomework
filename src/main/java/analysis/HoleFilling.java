@@ -5,6 +5,13 @@ import Entity.GridFileHead;
 
 
 public class HoleFilling {
+    /**
+     * @param Dem Dem数组
+     * @param nrows 行数
+     * @param nclos 列数
+     * @param Nodata 无数据值
+     * @return 填洼结果
+     */
     public static double[][] getHoleFilling(double Dem[][], int nrows, int nclos, double Nodata) {
 
         double[][] result=new double[nrows][nclos];
@@ -39,6 +46,10 @@ public class HoleFilling {
         return result;
     }
 
+    /**
+     * @param head 头文件
+     * @return 填洼结果
+     */
     public static double [][] getHoleFilling(GridFileHead head){
         int nrows = head.nrows;
         int nclos = head.ncols;
