@@ -6,29 +6,64 @@ import analysis.Interpolation.Thiessen;
 import Entity.*;
 import Database.ReadDataFromDB;
 import Database.StoreDataToDB;
+import windows.LoginV;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
 
 public class Main {
     public static void main(String[] args) throws IOException {
-       //testIDw();
-       //testThiessen();
-//        Grid grid = configGrid();
-//        testStoreFlowDirectionToDB();
-//        testReadFlowDirectionFromDB();
-//        testStoreFlowAccumulationToDB();
-//        testStoreSlopeToDB();
-//        testStoreFlowLengthToDB();
-//        testStoreAspectToDB();
-//        testReadAspectFromDB();
-//        testReadFlowLengthFromDB();
-//        testReadSlopeFromDB();
-//        testReadFlowAccumulationFromDB();
-  //      testIDw();
-        //testThiessen();
+        System.out.println("智慧城市水文模拟系统");
+        System.out.println("------------------");
+        System.out.println("测试数据存库");
+        testStoreDataToDB();
+        System.out.println("------------------");
+        System.out.println("测试反距离权重插值");
+        testIDw();
+        System.out.println("------------------");
+        System.out.println("测试泰森多边形插值");
+        testThiessen();
+        System.out.println("------------------");
+        System.out.println("测试流向功能");
+        testStoreFlowLengthToDB();
+        testReadFlowDirectionFromDB();
+        System.out.println("------------------");
+        System.out.println("测试累积流量功能");
+        testStoreFlowAccumulationToDB();
+        testReadFlowAccumulationFromDB();
+        System.out.println("------------------");
+        System.out.println("测试坡度功能");
+        testStoreSlopeToDB();
+        testReadSlopeFromDB();
+        System.out.println("------------------");
+        System.out.println("测试坡向功能");
+        testStoreAspectToDB();
+        testReadAspectFromDB();
+        System.out.println("------------------");
+        System.out.println("测试水流长度功能");
+        testStoreFlowLengthToDB();
         testReadFlowLengthFromDB();
+        System.out.println("------------------");
+        System.out.println("测试洼地填充");
+        testStoreHoleFillingToDB();
+        testReadHoleFillingFromDN();
+        System.out.println("------------------");
+        System.out.println("测试河网提取");
+        testStoreStreamExtractionToDB();
+        testReadStreamExtractionFromDB();
+        System.out.println("------------------");
+        System.out.println("测试上游汇入单元");
+        testStoreUpStreamUnitsCountsToDB();
+        testReadUpStreamUnitsCountsFromDB();
+        System.out.println("------------------");
+        System.out.println("测试可视域分析");
+        testViewshed();
+        System.out.println("------------------");
+        System.out.println("测试可视化界面(只实现了dem表)");
+        new LoginV();
+
     }
 
     public static Grid configGrid() throws IOException {
@@ -225,6 +260,74 @@ public class Main {
         ReadDataFromDB reader = new ReadDataFromDB();
         double[][] length = reader.readFlowLengthFromDB(head);
         FileDao.writeDoubleArray2DtoGridFile("src/main/results/FlowLength.asc",length,head);
+    }
+    public static void testStoreHoleFillingToDB() throws IOException {
+        String path = "src\\main\\resources\\dem.asc";
+        GridFileHead gridFileHead = FileDao.ReadGridFileHead(path);
+        double[][] holeFilling = HoleFilling.getHoleFilling(gridFileHead);
+        StoreDataToDB storer = new StoreDataToDB();
+        storer.storeHoleFillingToDB(holeFilling,gridFileHead);
+    }
+
+    public static void testReadHoleFillingFromDN() throws IOException {
+        String path = "src\\main\\resources\\dem.asc";
+        GridFileHead head = FileDao.ReadGridFileHead(path);
+        ReadDataFromDB reader = new ReadDataFromDB();
+        double[][] holefilling = reader.readHoleFillingFromDB(head);
+        FileDao.writeDoubleArray2DtoGridFile("src/main/results/HoleFilling.asc",holefilling,head);
+    }
+
+
+    public static void testStoreStreamExtractionToDB() throws IOException {
+        String path = "src\\main\\resources\\dem.asc";
+        GridFileHead gridFileHead = FileDao.ReadGridFileHead(path);
+        ReadDataFromDB reader = new ReadDataFromDB();
+        int[][] accumulation = reader.readFlowAccumulationFromDB(gridFileHead);
+        int[][] river = StreamExtraction.getRiver(accumulation, 5);
+        StoreDataToDB storer = new StoreDataToDB();
+        storer.storeStreamExtractionToDB(river,gridFileHead);
+    }
+
+    public static void testReadStreamExtractionFromDB() throws IOException {
+        String path = "src\\main\\resources\\dem.asc";
+        GridFileHead head = FileDao.ReadGridFileHead(path);
+        ReadDataFromDB reader = new ReadDataFromDB();
+        int[][] river = reader.readStreamExtrcationFromDB(head);
+        FileDao.writeIntegerArray2DtoGridFile("src/main/results/StreamExtraction.asc",river,head);
+    }
+
+    public static void testStoreUpStreamUnitsCountsToDB() throws IOException {
+        String path = "src\\main\\resources\\dem.asc";
+        GridFileHead gridFileHead = FileDao.ReadGridFileHead(path);
+        int[][] direction= FlowDirection.getFlowDirection(gridFileHead);
+        int[][] upValue = UpStreamUnitsCount.getUpValue(direction);
+        StoreDataToDB storer = new StoreDataToDB();
+        storer.storeUpStreamUnitsCountToDB(upValue,gridFileHead);
+    }
+
+    public static void testReadUpStreamUnitsCountsFromDB() throws IOException {
+        String path = "src\\main\\resources\\dem.asc";
+        GridFileHead head = FileDao.ReadGridFileHead(path);
+        ReadDataFromDB reader = new ReadDataFromDB();
+        int[][] counts = reader.readUpStreamUnitsCountFromDB(head);
+        FileDao.writeIntegerArray2DtoGridFile("src/main/results/UpStreamUnitsCounts.asc",counts,head);
+    }
+
+    public static void testViewshed() throws IOException {
+        String path = "src\\main\\resources\\dem.asc";
+        GridFileHead head = FileDao.ReadGridFileHead(path);
+        double[][] views = Viewshed.View(118, 50, head);
+        FileDao.writeDoubleArray2DtoGridFile("src/main/results/Viewshed.asc",views,head);
+
+    }
+
+    public static void testStreamExtraction2() throws IOException {
+        String path = "src\\main\\resources\\dem.asc";
+        GridFileHead head = FileDao.ReadGridFileHead(path);
+        int[][] flowDirection = FlowDirection.getFlowDirection(head);
+        int[][] accumulation = FlowAccumulation.GetAccumulation(head, flowDirection);
+        int[][] river = StreamExtraction.getRiver(accumulation, 10);
+        FileDao.writeIntegerArray2DtoGridFile("src/main/results/StreamExtraction2.asc",river,head);
     }
 
     public static void testSetRefRainSites() throws IOException {

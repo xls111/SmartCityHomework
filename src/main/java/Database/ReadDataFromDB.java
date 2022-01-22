@@ -234,4 +234,77 @@ public class ReadDataFromDB {
         }
         return new double[0][];
     }
+
+    public double[][] readHoleFillingFromDB(GridFileHead head){
+        try {
+            String sql1 = "select * from HoleFilling";
+            connectDB conn = new connectDB(sql1);
+            ResultSet resultSet = conn.statement.executeQuery();
+            int rows = head.nrows;
+            int cols = head.ncols;
+
+            double[][] holeFilling = new double[rows][cols];
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                int p = (int) Math.floor((id - 1) / cols);
+                System.out.println(p);
+                int q = id - p * cols - 1;
+                holeFilling[p][q] = resultSet.getDouble("holefilling");
+            }
+
+            return holeFilling;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return new double[0][];
+    }
+
+
+    public int[][] readStreamExtrcationFromDB(GridFileHead head){
+        try {
+            String sql1 = "select * from StreamExtraction";
+            connectDB conn = new connectDB(sql1);
+            ResultSet resultSet = conn.statement.executeQuery();
+            int rows = head.nrows;
+            int cols = head.ncols;
+
+            int[][] river = new int[rows][cols];
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                int p = (int) Math.floor((id - 1) / cols);
+                System.out.println(p);
+                int q = id - p * cols - 1;
+                river[p][q] = resultSet.getInt("river");
+            }
+
+            return river;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return new int[0][];
+    }
+
+   public int[][] readUpStreamUnitsCountFromDB(GridFileHead head){
+       try {
+           String sql1 = "select * from UpStreamUnitsCount";
+           connectDB conn = new connectDB(sql1);
+           ResultSet resultSet = conn.statement.executeQuery();
+           int rows = head.nrows;
+           int cols = head.ncols;
+
+           int[][] count = new int[rows][cols];
+           while (resultSet.next()) {
+               int id = resultSet.getInt("id");
+               int p = (int) Math.floor((id - 1) / cols);
+               System.out.println(p);
+               int q = id - p * cols - 1;
+               count[p][q] = resultSet.getInt("count");
+           }
+
+           return count;
+       } catch (SQLException e) {
+           e.printStackTrace();
+       }
+       return new int[0][];
+   }
 }

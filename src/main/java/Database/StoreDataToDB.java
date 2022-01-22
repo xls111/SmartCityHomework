@@ -360,4 +360,134 @@ public class StoreDataToDB {
             e.printStackTrace();
         }
     }
+
+    public void storeHoleFillingToDB(double[][] filling,GridFileHead head){
+        try {
+            if (validateTableNameExist("HoleFilling")) {
+                return;
+            }
+
+            String sql1 = "CREATE TABLE IF NOT EXISTS HoleFilling (" +
+                    "id int(4) not null," +
+                    "x double," +                       //中心点x坐标
+                    "y double," +                       //中心点y坐标
+                    "holefilling double," +
+                    "PRIMARY KEY (`id`)" +
+                    ");";
+            connectDB conn1 = new connectDB(sql1);
+            conn1.statement.executeUpdate();
+
+            System.out.printf("建立洼地填充属性表成功");
+            String sql2 = "insert into HoleFilling(id,x,y,holefilling) values(?,?,?,?)";
+            connectDB conn2 = new connectDB(sql2);
+            int k = 0;
+
+            double cellSize = head.cellsize;
+            double xllcorner = head.xllcorner;
+            double yllcorner = head.yllcorner;
+            int nrows = head.nrows;
+            for (int i = 0; i < filling.length; i++) {
+                for (int j = 0; j < filling[i].length; j++) {
+                    k = k + 1;
+                    conn2.statement.setInt(1, k);
+                    conn2.statement.setDouble(2, j * cellSize + 0.5 * cellSize + xllcorner);
+                    conn2.statement.setDouble(3, (nrows - i - 1) * cellSize + 0.5 * cellSize + yllcorner);
+                    conn2.statement.setDouble(4, filling[i][j]);
+                    conn2.statement.executeUpdate();
+                }
+            }
+
+            System.out.printf("洼地填充表已存入数据库");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void storeStreamExtractionToDB(int[][] river,GridFileHead head){
+        try {
+            if (validateTableNameExist("StreamExtraction")) {
+                return;
+            }
+
+            String sql1 = "CREATE TABLE IF NOT EXISTS StreamExtraction (" +
+                    "id int(4) not null," +
+                    "x double," +                       //中心点x坐标
+                    "y double," +                       //中心点y坐标
+                    "river int," +
+                    "PRIMARY KEY (`id`)" +
+                    ");";
+            connectDB conn1 = new connectDB(sql1);
+            conn1.statement.executeUpdate();
+
+            System.out.printf("建立河网提取表成功");
+            String sql2 = "insert into StreamExtraction(id,x,y,river) values(?,?,?,?)";
+            connectDB conn2 = new connectDB(sql2);
+            int k = 0;
+
+            double cellSize = head.cellsize;
+            double xllcorner = head.xllcorner;
+            double yllcorner = head.yllcorner;
+            int nrows = head.nrows;
+            for (int i = 0; i < river.length; i++) {
+                for (int j = 0; j < river[i].length; j++) {
+                    k = k + 1;
+                    conn2.statement.setInt(1, k);
+                    conn2.statement.setDouble(2, j * cellSize + 0.5 * cellSize + xllcorner);
+                    conn2.statement.setDouble(3, (nrows - i - 1) * cellSize + 0.5 * cellSize + yllcorner);
+                    conn2.statement.setDouble(4, river[i][j]);
+                    conn2.statement.executeUpdate();
+                }
+            }
+
+            System.out.printf("河网提取结果已存入数据库");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void storeUpStreamUnitsCountToDB(int[][] count,GridFileHead head){
+        try {
+            if (validateTableNameExist("UpStreamUnitsCount")) {
+                return;
+            }
+
+            String sql1 = "CREATE TABLE IF NOT EXISTS UpStreamUnitsCount (" +
+                    "id int(4) not null," +
+                    "x double," +                       //中心点x坐标
+                    "y double," +                       //中心点y坐标
+                    "count int," +
+                    "PRIMARY KEY (`id`)" +
+                    ");";
+            connectDB conn1 = new connectDB(sql1);
+            conn1.statement.executeUpdate();
+
+            System.out.printf("建立河网提取表成功");
+            String sql2 = "insert into UpStreamUnitsCount(id,x,y,count) values(?,?,?,?)";
+            connectDB conn2 = new connectDB(sql2);
+            int k = 0;
+
+            double cellSize = head.cellsize;
+            double xllcorner = head.xllcorner;
+            double yllcorner = head.yllcorner;
+            int nrows = head.nrows;
+            for (int i = 0; i < count.length; i++) {
+                for (int j = 0; j < count[i].length; j++) {
+                    k = k + 1;
+                    conn2.statement.setInt(1, k);
+                    conn2.statement.setDouble(2, j * cellSize + 0.5 * cellSize + xllcorner);
+                    conn2.statement.setDouble(3, (nrows - i - 1) * cellSize + 0.5 * cellSize + yllcorner);
+                    conn2.statement.setDouble(4, count[i][j]);
+                    conn2.statement.executeUpdate();
+                }
+            }
+
+            System.out.printf("上游汇入单元结果已存入数据库");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
