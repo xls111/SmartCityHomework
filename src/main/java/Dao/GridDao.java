@@ -33,7 +33,7 @@ public class GridDao {
         double[][] rain = new double[grid.getRows()][grid.getCols()];
 
         for (int i = 0; i < sites.length; i++)
-            for (int j = 0; j < sites[i].length; i++) {
+            for (int j = 0; j < sites[i].length; j++) {
                 rain[i][j] = sites[i][j].getRain();
             }
         return rain;

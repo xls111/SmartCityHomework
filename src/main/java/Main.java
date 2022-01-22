@@ -26,19 +26,7 @@ public class Main {
 //        testReadFlowLengthFromDB();
 //        testReadSlopeFromDB();
 //        testReadFlowAccumulationFromDB();
-        String sentence = "├─src\n" +
-                "│  └─main\n" +
-                "│      ├─java\n" +
-                "│      │  ├─analysis\t    -- 水文分析功能模块\n" +
-                "│      │  │  ├─Interpolation   -- 雨量插值计算\t\n" +
-                "│      │  │  └─MultiThread     -- 多线程计算\n" +
-                "│      │  ├─Dao       -- 数据获取与处理层\n" +
-                "│      │  ├─Database  -- 数据库操作层\n" +
-                "│      │  ├─entity    -- 数据层\n" +
-                "│      │  └─windows   -- 可视化窗口层\n" +
-                "│      ├─resources    -- 数据资源文件\n" +
-                "│      └─results      -- 结果文件\n";
-        System.out.println(sentence);
+        testIDw();
     }
 
     public static Grid configGrid() throws IOException {
